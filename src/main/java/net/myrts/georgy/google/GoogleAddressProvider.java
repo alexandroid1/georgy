@@ -7,12 +7,16 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
+import java.util.List;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import net.myrts.georgy.api.Address;
 import net.myrts.georgy.api.GeoLocation;
+import net.myrts.georgy.api.GeorgyException;
+import net.myrts.georgy.api.GeoProviderLatLon;
 import net.myrts.georgy.google.stubs.GoogleResponse;
 import net.myrts.georgy.google.stubs.Result;
 import org.slf4j.Logger;
@@ -23,7 +27,6 @@ import org.slf4j.LoggerFactory;
  * Created by Oleksandr Pavlov avpavlov108@gmail.com on 15.11.15.
  */
 
-
 /**
  * Geocode request URL. Here see we are passing "json" it means we will get
  * the output in JSON format. You can also pass "xml" instead of "json" for
@@ -31,7 +34,7 @@ import org.slf4j.LoggerFactory;
  * "http://maps.googleapis.com/maps/api/geocode/xml";
  *
  */
-public class GoogleAddressProvider {
+public class GoogleAddressProvider implements GeoProviderLatLon {
 
 /**
  * Here the fullAddress String is in format like
@@ -53,8 +56,10 @@ public class GoogleAddressProvider {
      * or false.
      *
      * @param fullAddress String
+     * @return geoLocation GeoLocation
      */
-    public GeoLocation convertToLatLong(String fullAddress)  {
+    @Override
+    public GeoLocation convertToLatLong(String fullAddress) throws GeorgyException {
 
         URL url = null;
         GeoLocation geoLocation = new GeoLocation(0.0,0.0);
@@ -78,9 +83,6 @@ public class GoogleAddressProvider {
 
             response = mapper.readValue(in,GoogleResponse.class);
 
-
-          //  GoogleResponse res = new GoogleAddressProvider().convertToLatLong("Apollo Bunder, Mumbai, Maharashtra, India");
-
             if (response.getStatus().equals("OK")) {
                 for (Result result : response.getResults()) {
                     geoLocation = new GeoLocation(
@@ -98,16 +100,20 @@ public class GoogleAddressProvider {
         }
 
         } catch (MalformedURLException e) {
-            e.printStackTrace();
             LOG.error("MalformedURLException ", e);
+            throw new GeorgyException(e.getMessage(), e);
         } catch (UnsupportedEncodingException e) {
             LOG.error("UnsupportedEncodingException ", e);
+            throw new GeorgyException(e.getMessage(), e);
         } catch (JsonMappingException e) {
             LOG.error("JsonMappingException ", e);
+            throw new GeorgyException(e.getMessage(), e);
         } catch (JsonParseException e) {
             LOG.error("JsonParseException ", e);
+            throw new GeorgyException(e.getMessage(), e);
         } catch (IOException e) {
             LOG.error("IOException ", e);
+            throw new GeorgyException(e.getMessage(), e);
         }
 
         return geoLocation;
@@ -123,12 +129,16 @@ public class GoogleAddressProvider {
      * from a device with a location sensor. This value must be either true
      * or false.
      *
-     * @param latlongString String
+     * @param latLongString String
      */
-    public GoogleResponse convertFromLatLong(String latLongString) throws IOException {
+    @Override
+    public Address convertFromLatLong(String latLongString) throws GeorgyException {
 
-        URL url = new URL(URL + "?latlng="
-                + URLEncoder.encode(latLongString, "UTF-8") + "&sensor=false");
+        URL url = null;
+        Address address = null;
+        try {
+            url = new URL(URL + "?latlng="
+                    + URLEncoder.encode(latLongString, "UTF-8") + "&sensor=false");
 
         // Open the Connection
         URLConnection conn = url.openConnection();
@@ -142,12 +152,49 @@ public class GoogleAddressProvider {
             // without this option set adding new fields breaks old code
             mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
-            response = (GoogleResponse)mapper.readValue(in,GoogleResponse.class);
-            in.close();
+            response = mapper.readValue(in,GoogleResponse.class);
+
+            if (response.getStatus().equals("OK")) {
+                List<Result> result = response.getResults();
+
+                // 1218, Shahid Bhagat Singh Marg, Apollo Bandar, Colaba, Mumbai, Maharashtra 400001, India
+                String resStr =result.get(1).getFormattedAddress();
+                LOG.info(resStr);
+
+                // see json format https://developers.google.com/maps/documentation/geocoding/intro
+                address = new Address();
+                address.setStreetNumber(result.get(1).getAddressComponents().get(0).getLongName());
+                address.setRoute(result.get(1).getAddressComponents().get(1).getLongName());
+                address.setLocality(result.get(1).getAddressComponents().get(2).getLongName());
+                address.setAdministrativeAreaLevel_2(result.get(1).getAddressComponents().get(3).getLongName());
+                address.setAdministrativeAreaLevel_1(result.get(1).getAddressComponents().get(4).getLongName());
+                address.setCountry(result.get(1).getAddressComponents().get(6).getLongName()+" "+
+                        result.get(1).getAddressComponents().get(8).getLongName());
+                address.setPostalCode(result.get(1).getAddressComponents().get(7).getLongName());
+
+            } else {
+                LOG.info(response.getStatus());
+            }
         }
 
-        return response;
+        } catch (MalformedURLException e) {
+            LOG.error("MalformedURLException ", e);
+            throw new GeorgyException(e.getMessage(), e);
+        } catch (UnsupportedEncodingException e) {
+            LOG.error("UnsupportedEncodingException ", e);
+            throw new GeorgyException(e.getMessage(), e);
+        } catch (JsonMappingException e) {
+            LOG.error("JsonMappingException ", e);
+            throw new GeorgyException(e.getMessage(), e);
+        } catch (JsonParseException e) {
+            LOG.error("JsonParseException ", e);
+            throw new GeorgyException(e.getMessage(), e);
+        } catch (IOException e) {
+            LOG.error("IOException ", e);
+            throw new GeorgyException(e.getMessage(), e);
+        }
 
+        return address;
     }
 
 }

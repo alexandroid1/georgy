@@ -6,7 +6,6 @@ import net.myrts.georgy.api.GeoLocation;
 /**
  * Created by georgy on 08.12.15.
  */
-public interface assertLocation {
-    void assertLocation(Double latitude, Double longitude, GeoLocation geoLocation);
+public interface assertAddressLocation {
     void assertLocation(Double latitude, Double longitude, AddressLocation addressLocation);
 }

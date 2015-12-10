@@ -8,11 +8,7 @@ import com.maxmind.geoip2.record.Country;
 import com.maxmind.geoip2.record.Location;
 import com.maxmind.geoip2.record.Postal;
 import com.maxmind.geoip2.record.Subdivision;
-import net.myrts.georgy.api.Address;
-import net.myrts.georgy.api.AddressLocation;
-import net.myrts.georgy.api.GeoLocation;
-import net.myrts.georgy.api.GeoProvider;
-import net.myrts.georgy.api.GeorgyException;
+import net.myrts.georgy.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,7 +25,7 @@ import java.util.Map;
  *         Date: 10/19/15
  *         Time: 5:48 PM
  */
-public class MaxMindGeoProvider implements GeoProvider {
+public class MaxMindGeoProvider implements GeoProviderIp {
     private static final Logger LOG = LoggerFactory.getLogger(MaxMindGeoProvider.class);
     
     private static final String IP_DB_PATH = "GeoLite2-City.mmdb";

@@ -35,4 +35,5 @@ public class AddressLocation {
         sb.append('}');
         return sb.toString();
     }
+
 }

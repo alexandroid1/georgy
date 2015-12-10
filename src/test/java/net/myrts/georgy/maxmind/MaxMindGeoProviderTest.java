@@ -4,6 +4,7 @@ import net.myrts.georgy.api.Address;
 import net.myrts.georgy.api.AddressLocation;
 import net.myrts.georgy.api.GeoLocation;
 import net.myrts.georgy.api.GeorgyException;
+import net.myrts.georgy.assertAddressLocation;
 import org.junit.Test;
 
 import java.net.UnknownHostException;
@@ -20,7 +21,7 @@ import static org.junit.Assert.fail;
  *         Date: 10/19/15
  *         Time: 5:48 PM
  */
-public class MaxMindGeoProviderTest implements net.myrts.georgy.assertLocation {
+public class MaxMindGeoProviderTest implements assertAddressLocation {
     @Test
     public void shouldParseLocationByIPFromLocalDB() throws UnknownHostException, GeorgyException {
         final MaxMindGeoProvider maxMindGeoProvider = new MaxMindGeoProvider();
@@ -78,11 +79,6 @@ public class MaxMindGeoProviderTest implements net.myrts.georgy.assertLocation {
         assertEquals("Postal code does not match " + addressLocation, "55414", address.getPostalCode());
 
         assertLocation(44.9759d, -93.2166d, addressLocation);
-    }
-
-    @Override
-    public void assertLocation(Double latitude, Double longitude, GeoLocation geoLocation) {
-
     }
 
     @Override
