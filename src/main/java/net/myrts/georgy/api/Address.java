@@ -11,59 +11,10 @@ public class Address {
     // for all providers
     private String country;
     private String postalCode;
-
-    //  for MaxMind provider
     private String countryIsoCode;
     private String city;
     private String subdivision;
     private String subdivisionIsoCode;
-
-    // for Google provider
-    private String streetNumber;
-    private String route;
-    private String locality;
-    private String administrativeAreaLevel_2;
-    private String administrativeAreaLevel_1;
-
-    public String getStreetNumber() {
-        return streetNumber;
-    }
-
-    public void setStreetNumber(String streetNumber) {
-        this.streetNumber = streetNumber;
-    }
-
-    public String getRoute() {
-        return route;
-    }
-
-    public void setRoute(String route) {
-        this.route = route;
-    }
-
-    public String getLocality() {
-        return locality;
-    }
-
-    public void setLocality(String locality) {
-        this.locality = locality;
-    }
-
-    public String getAdministrativeAreaLevel_2() {
-        return administrativeAreaLevel_2;
-    }
-
-    public void setAdministrativeAreaLevel_2(String administrativeAreaLevel_2) {
-        this.administrativeAreaLevel_2 = administrativeAreaLevel_2;
-    }
-
-    public String getAdministrativeAreaLevel_1() {
-        return administrativeAreaLevel_1;
-    }
-
-    public void setAdministrativeAreaLevel_1(String administrativeAreaLevel_1) {
-        this.administrativeAreaLevel_1 = administrativeAreaLevel_1;
-    }
 
     public String getCity() {
         return city;
@@ -123,15 +74,5 @@ public class Address {
                 ", subdivision='" + subdivision + '\'' +
                 ", subdivisionIsoCode='" + subdivisionIsoCode + '\'' +
                 '}';
-    }
-
-    public String toStringGoogle() {
-        return  streetNumber + ", " +
-                route + ", " +
-                locality + ", " +
-                administrativeAreaLevel_2 + ", " +
-                administrativeAreaLevel_1 + ", " +
-                country + ", " +
-                postalCode;
     }
 }

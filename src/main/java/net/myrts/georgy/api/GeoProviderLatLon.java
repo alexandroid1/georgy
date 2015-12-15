@@ -8,5 +8,5 @@ package net.myrts.georgy.api;
 public interface GeoProviderLatLon {
     GeoLocation convertToLatLong(String fullAddress) throws GeorgyException;
 
-    Address convertFromLatLong(String latLongString) throws GeorgyException;
+    AddressGoogle convertFromLatLong(String latLongString) throws GeorgyException;
 }

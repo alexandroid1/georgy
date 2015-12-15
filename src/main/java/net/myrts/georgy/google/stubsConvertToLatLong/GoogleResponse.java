@@ -1,7 +1,9 @@
 
-package net.myrts.georgy.google.stubs;
+package net.myrts.georgy.google.stubsConvertToLatLong;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
@@ -13,56 +15,56 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "northeast",
-    "southwest"
+    "results",
+    "status"
 })
-public class Viewport {
+public class GoogleResponse {
 
-    @JsonProperty("northeast")
-    private Northeast_ northeast;
-    @JsonProperty("southwest")
-    private Southwest_ southwest;
+    @JsonProperty("results")
+    private List<Result> results = new ArrayList<Result>();
+    @JsonProperty("status")
+    private String status;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     /**
      * 
      * @return
-     *     The northeast
+     *     The results
      */
-    @JsonProperty("northeast")
-    public Northeast_ getNortheast() {
-        return northeast;
+    @JsonProperty("results")
+    public List<Result> getResults() {
+        return results;
     }
 
     /**
      * 
-     * @param northeast
-     *     The northeast
+     * @param results
+     *     The results
      */
-    @JsonProperty("northeast")
-    public void setNortheast(Northeast_ northeast) {
-        this.northeast = northeast;
+    @JsonProperty("results")
+    public void setResults(List<Result> results) {
+        this.results = results;
     }
 
     /**
      * 
      * @return
-     *     The southwest
+     *     The status
      */
-    @JsonProperty("southwest")
-    public Southwest_ getSouthwest() {
-        return southwest;
+    @JsonProperty("status")
+    public String getStatus() {
+        return status;
     }
 
     /**
      * 
-     * @param southwest
-     *     The southwest
+     * @param status
+     *     The status
      */
-    @JsonProperty("southwest")
-    public void setSouthwest(Southwest_ southwest) {
-        this.southwest = southwest;
+    @JsonProperty("status")
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     @JsonAnyGetter

@@ -13,4 +13,8 @@ public class GeorgyException extends Exception {
     public GeorgyException(String message, Exception e) {
         super(message, e);
     }
+
+    public GeorgyException(String message) {
+        super(message);
+    }
 }

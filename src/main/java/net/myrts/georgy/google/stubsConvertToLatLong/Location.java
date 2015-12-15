@@ -1,5 +1,5 @@
 
-package net.myrts.georgy.google.stubs;
+package net.myrts.georgy.google.stubsConvertToLatLong;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,56 +13,56 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "northeast",
-    "southwest"
+    "lat",
+    "lng"
 })
-public class Bounds {
+public class Location {
 
-    @JsonProperty("northeast")
-    private Northeast northeast;
-    @JsonProperty("southwest")
-    private Southwest southwest;
+    @JsonProperty("lat")
+    private Double lat;
+    @JsonProperty("lng")
+    private Double lng;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     /**
      * 
      * @return
-     *     The northeast
+     *     The lat
      */
-    @JsonProperty("northeast")
-    public Northeast getNortheast() {
-        return northeast;
+    @JsonProperty("lat")
+    public Double getLat() {
+        return lat;
     }
 
     /**
      * 
-     * @param northeast
-     *     The northeast
+     * @param lat
+     *     The lat
      */
-    @JsonProperty("northeast")
-    public void setNortheast(Northeast northeast) {
-        this.northeast = northeast;
+    @JsonProperty("lat")
+    public void setLat(Double lat) {
+        this.lat = lat;
     }
 
     /**
      * 
      * @return
-     *     The southwest
+     *     The lng
      */
-    @JsonProperty("southwest")
-    public Southwest getSouthwest() {
-        return southwest;
+    @JsonProperty("lng")
+    public Double getLng() {
+        return lng;
     }
 
     /**
      * 
-     * @param southwest
-     *     The southwest
+     * @param lng
+     *     The lng
      */
-    @JsonProperty("southwest")
-    public void setSouthwest(Southwest southwest) {
-        this.southwest = southwest;
+    @JsonProperty("lng")
+    public void setLng(Double lng) {
+        this.lng = lng;
     }
 
     @JsonAnyGetter

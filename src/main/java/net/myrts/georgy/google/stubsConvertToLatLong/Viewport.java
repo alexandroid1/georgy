@@ -1,9 +1,9 @@
 
-package net.myrts.georgy.google.stubs;
+package net.myrts.georgy.google.stubsConvertToLatLong;
 
 import java.util.HashMap;
 import java.util.Map;
-import javax.annotation.Generated;
+
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -13,56 +13,56 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "lat",
-    "lng"
+    "northeast",
+    "southwest"
 })
-public class Southwest {
+public class Viewport {
 
-    @JsonProperty("lat")
-    private Double lat;
-    @JsonProperty("lng")
-    private Double lng;
+    @JsonProperty("northeast")
+    private Northeast_ northeast;
+    @JsonProperty("southwest")
+    private Southwest_ southwest;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     /**
      * 
      * @return
-     *     The lat
+     *     The northeast
      */
-    @JsonProperty("lat")
-    public Double getLat() {
-        return lat;
+    @JsonProperty("northeast")
+    public Northeast_ getNortheast() {
+        return northeast;
     }
 
     /**
      * 
-     * @param lat
-     *     The lat
+     * @param northeast
+     *     The northeast
      */
-    @JsonProperty("lat")
-    public void setLat(Double lat) {
-        this.lat = lat;
+    @JsonProperty("northeast")
+    public void setNortheast(Northeast_ northeast) {
+        this.northeast = northeast;
     }
 
     /**
      * 
      * @return
-     *     The lng
+     *     The southwest
      */
-    @JsonProperty("lng")
-    public Double getLng() {
-        return lng;
+    @JsonProperty("southwest")
+    public Southwest_ getSouthwest() {
+        return southwest;
     }
 
     /**
      * 
-     * @param lng
-     *     The lng
+     * @param southwest
+     *     The southwest
      */
-    @JsonProperty("lng")
-    public void setLng(Double lng) {
-        this.lng = lng;
+    @JsonProperty("southwest")
+    public void setSouthwest(Southwest_ southwest) {
+        this.southwest = southwest;
     }
 
     @JsonAnyGetter

@@ -1,5 +1,5 @@
 
-package net.myrts.georgy.google.stubs;
+package net.myrts.georgy.google.stubsConvertToLatLong;
 
 import java.util.ArrayList;
 import java.util.HashMap;

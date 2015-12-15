@@ -1,9 +1,9 @@
 
-package net.myrts.georgy.google.stubs;
+package net.myrts.georgy.google.stubsConvertToLatLong;
 
 import java.util.HashMap;
 import java.util.Map;
-import javax.annotation.Generated;
+
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
