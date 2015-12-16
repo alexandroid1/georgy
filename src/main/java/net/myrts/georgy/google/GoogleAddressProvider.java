@@ -155,7 +155,7 @@ public class GoogleAddressProvider implements GeoProviderLatLon {
         try {
             final JSONObject response = JsonReader.read(url);
 
-           //@todo for () getJSONObject(0); -> length
+            //@todo for () getJSONObject(0); -> length
             final JSONObject location = response.getJSONArray("results").getJSONObject(0);
             final JSONArray addressComponents = location.getJSONArray("address_components");
             LOG.debug("addressComponents " + addressComponents);
@@ -174,78 +174,78 @@ public class GoogleAddressProvider implements GeoProviderLatLon {
             ArrayList<String> keys = new ArrayList<>(set);
             LOG.debug("keys " + keys);
 
-            Function <String,String> rotateHashMap = Functions.forMap(addressSettings);
-            ArrayList<String> values = new ArrayList<> (Collections2.transform(keys, rotateHashMap));
+            Function<String, String> rotateHashMap = Functions.forMap(addressSettings);
+            ArrayList<String> values = new ArrayList<>(Collections2.transform(keys, rotateHashMap));
 
             for (Object key : keys) {
                 LOG.debug(key + " " + addressSettings.get(key));
             }
-            if (addressGoogle != null) {
 
-                addressGoogle.setAddressKeys(keys);
-                addressGoogle.setAddressValues(values);
-                addressGoogle.setAddressSettingsMap(addressSettings);
+            addressGoogle.setAddressKeys(keys);
+            addressGoogle.setAddressValues(values);
+            addressGoogle.setAddressSettingsMap(addressSettings);
 
-                // Київський район
-                // Colaba
-                if (addressSettings.containsKey("sublocality_level_1")) {
-                    addressGoogle.setSublocalityLevel1(addressSettings.get("sublocality_level_1"));
-                }
-
-                // null
-                // Apollo Bandar
-                if (addressSettings.containsKey("sublocality_level_2")) {
-                    addressGoogle.setSublocalityLevel1(addressSettings.get("sublocality_level_2"));
-                }
-
-                // null
-                // Cusrow Baug Colony
-                if (addressSettings.containsKey("sublocality_level_3")) {
-                    addressGoogle.setSublocalityLevel3(addressSettings.get("sublocality_level_3"));
-                }
-
-                //Украина
-                // Индия
-                if (addressSettings.containsKey("country")) {
-                    addressGoogle.setCountry(addressSettings.get("country"));
-                }
-
-                //вулиця Челюскінців
-                // null
-                if (addressSettings.containsKey("route")) {
-                    addressGoogle.setRoute(addressSettings.get("route"));
-
-                }
-
-                //Донецька область
-                //Maharashtra
-                if (addressSettings.containsKey("administrative_area_level_1")) {
-                    addressGoogle.setAdministrativeAreaLevel_1(addressSettings.get("administrative_area_level_1"));
-                }
-
-                // null
-                // Mumbai
-                if (addressSettings.containsKey("administrative_area_level_2")) {
-                    addressGoogle.setAdministrativeAreaLevel_2(addressSettings.get("administrative_area_level_2"));
-                }
-
-                //Донецька міськрада
-                // Cusrow Baug Colony
-                if (addressSettings.containsKey("administrative_area_level_3")) {
-                    addressGoogle.setAdministrativeAreaLevel_3(addressSettings.get("administrative_area_level_3"));
-                }
-
-                //189
-                if (addressSettings.containsKey("street_number")) {
-                    addressGoogle.setStreetNumber(addressSettings.get("street_number"));
-                }
-
-                //Донецьк
-                //Mumbai
-                if (addressSettings.containsKey("locality")) {
-                    addressGoogle.setStreetNumber(addressSettings.get("locality"));
-                }
+            // Київський район
+            // Colaba
+            if (addressSettings.containsKey("sublocality_level_1")) {
+                addressGoogle.setSublocalityLevel1(addressSettings.get("sublocality_level_1"));
             }
+
+            // null
+            // Apollo Bandar
+            if (addressSettings.containsKey("sublocality_level_2")) {
+                addressGoogle.setSublocalityLevel1(addressSettings.get("sublocality_level_2"));
+            }
+
+            // null
+            // Cusrow Baug Colony
+            if (addressSettings.containsKey("sublocality_level_3")) {
+                addressGoogle.setSublocalityLevel3(addressSettings.get("sublocality_level_3"));
+            }
+
+            //Украина
+            // Индия
+            if (addressSettings.containsKey("country")) {
+                addressGoogle.setCountry(addressSettings.get("country"));
+            }
+
+            //вулиця Челюскінців
+            // null
+            if (addressSettings.containsKey("route")) {
+                addressGoogle.setRoute(addressSettings.get("route"));
+
+            }
+
+            //Донецька область
+            //Maharashtra
+            if (addressSettings.containsKey("administrative_area_level_1")) {
+                addressGoogle.setAdministrativeAreaLevel_1(addressSettings.get("administrative_area_level_1"));
+            }
+
+            // null
+            // Mumbai
+            if (addressSettings.containsKey("administrative_area_level_2")) {
+                addressGoogle.setAdministrativeAreaLevel_2(addressSettings.get("administrative_area_level_2"));
+            }
+
+            //Донецька міськрада
+            // Cusrow Baug Colony
+            if (addressSettings.containsKey("administrative_area_level_3")) {
+                addressGoogle.setAdministrativeAreaLevel_3(addressSettings.get("administrative_area_level_3"));
+            }
+
+            //189
+            if (addressSettings.containsKey("street_number")) {
+                addressGoogle.setStreetNumber(addressSettings.get("street_number"));
+            }
+
+            //Донецьк
+            //Mumbai
+            if (addressSettings.containsKey("locality")) {
+                addressGoogle.setStreetNumber(addressSettings.get("locality"));
+            }
+
+            //@todo add postal_code
 
         } catch (MalformedURLException e) {
             LOG.error("MalformedURLException ", e);
@@ -257,7 +257,7 @@ public class GoogleAddressProvider implements GeoProviderLatLon {
             LOG.error("IOException ", e);
             throw new GeorgyException(e.getMessage(), e);
         }
-        
+
         return addressGoogle;
     }
 

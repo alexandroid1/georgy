@@ -1,5 +1,7 @@
 package net.myrts.georgy.api;
 
+import com.google.api.client.repackaged.com.google.common.base.Joiner;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
@@ -10,7 +12,6 @@ import java.util.Set;
 public class AddressGoogle {
 
     private ArrayList<String> addressKeys;
-
     private ArrayList<String> addressValues;
     private HashMap<String, String> addressSettingsMap;
 
@@ -174,16 +175,9 @@ public class AddressGoogle {
         this.addressSettingsMap = addressSettingsMap;
     }
 
-    // @todo google guava implementation
     @Override
     public String toString() {
-        return  streetNumber + ", " +
-                route + ", " +
-                locality + ", " +
-                administrativeAreaLevel_2 + ", " +
-                administrativeAreaLevel_1 + ", " +
-                country + ", " +
-                postalCode;
+        return Joiner.on("|").skipNulls().withKeyValueSeparator(" -> ").join(addressSettingsMap);
     }
 
 }
