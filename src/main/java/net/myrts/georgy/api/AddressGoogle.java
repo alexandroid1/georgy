@@ -1,11 +1,18 @@
 package net.myrts.georgy.api;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Set;
+
 /**
  * Created by georgy on 15.12.15.
  */
 public class AddressGoogle {
 
+    private ArrayList<String> addressKeys;
 
+    private ArrayList<String> addressValues;
+    private HashMap<String, String> addressSettingsMap;
 
     private String country;
     private String postalCode;
@@ -22,7 +29,6 @@ public class AddressGoogle {
     private String administrativeAreaLevel_3;
     private String administrativeAreaLevel_2;
     private String administrativeAreaLevel_1;
-
 
     public String getStreetNumber() {
         return streetNumber;
@@ -144,6 +150,31 @@ public class AddressGoogle {
         this.subdivisionIsoCode = subdivisionIsoCode;
     }
 
+    public ArrayList<String> getAddressKeys() {
+        return addressKeys;
+    }
+
+    public void setAddressKeys(ArrayList<String> addressKeys) {
+        this.addressKeys = new ArrayList<>(addressKeys);
+    }
+
+    public ArrayList<String> getAddressValues() {
+        return addressValues;
+    }
+
+    public void setAddressValues(ArrayList<String> addressValues) {
+        this.addressValues = new ArrayList<>(addressValues);
+    }
+
+    public HashMap<String, String> getAddressSettingsMap() {
+        return addressSettingsMap;
+    }
+
+    public void setAddressSettingsMap(HashMap<String, String> addressSettingsMap) {
+        this.addressSettingsMap = addressSettingsMap;
+    }
+
+    // @todo google guava implementation
     @Override
     public String toString() {
         return  streetNumber + ", " +

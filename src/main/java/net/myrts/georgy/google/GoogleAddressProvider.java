@@ -15,9 +15,8 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.google.api.client.util.Joiner;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Multimap;
-import com.google.common.collect.Multiset;
+import com.google.common.base.Functions;
+import com.google.common.collect.*;
 import net.myrts.georgy.api.*;
 import net.myrts.georgy.google.stubsConvertFromLatLong.JsonReader;
 import net.myrts.georgy.google.stubsConvertToLatLong.GoogleResponse;
@@ -29,8 +28,6 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 
 
 import javax.annotation.Nullable;
@@ -147,22 +144,23 @@ public class GoogleAddressProvider implements GeoProviderLatLon {
 
         final String baseUrl = URL;
         final Map<String, String> params = Maps.newHashMap();
+
+        // @todo func input param lang
         params.put("language", "ru");
         params.put("sensor", "false");
         params.put("latlng", latLongString);
         final String url = baseUrl + '?' + encodeParams(params);
         LOG.debug("url ", url);
-        AddressGoogle address = null;
+        AddressGoogle addressGoogle = new AddressGoogle();
         try {
             final JSONObject response = JsonReader.read(url);
 
            //@todo for () getJSONObject(0); -> length
             final JSONObject location = response.getJSONArray("results").getJSONObject(0);
-            //  final String formattedAddress = location.getString("formatted_address");
             final JSONArray addressComponents = location.getJSONArray("address_components");
             LOG.debug("addressComponents " + addressComponents);
 
-            HashMap<String, String> addressSettings = new HashMap<>();
+            HashMap<String, String> addressSettings = Maps.newHashMap();
             for (int i = 0; i < addressComponents.length(); i++) {
                 String longName = addressComponents.getJSONObject(i).getString("long_name");
                 JSONArray types = addressComponents.getJSONObject(i).getJSONArray("types");
@@ -170,71 +168,82 @@ public class GoogleAddressProvider implements GeoProviderLatLon {
                 addressSettings.put(type, longName);
             }
 
-            Set keys = addressSettings.keySet();
+            Set set = addressSettings.keySet();
+            LOG.debug("addressSettings.keySet(); " + set);
+
+            ArrayList<String> keys = new ArrayList<>(set);
+            LOG.debug("keys " + keys);
+
+            Function <String,String> rotateHashMap = Functions.forMap(addressSettings);
+            ArrayList<String> values = new ArrayList<> (Collections2.transform(keys, rotateHashMap));
+
             for (Object key : keys) {
                 LOG.debug(key + " " + addressSettings.get(key));
             }
-            if (address != null) {
+            if (addressGoogle != null) {
+
+                addressGoogle.setAddressKeys(keys);
+                addressGoogle.setAddressValues(values);
+                addressGoogle.setAddressSettingsMap(addressSettings);
 
                 // Київський район
                 // Colaba
                 if (addressSettings.containsKey("sublocality_level_1")) {
-                    address.setSublocalityLevel1(addressSettings.get("sublocality_level_1"));
+                    addressGoogle.setSublocalityLevel1(addressSettings.get("sublocality_level_1"));
                 }
 
                 // null
                 // Apollo Bandar
                 if (addressSettings.containsKey("sublocality_level_2")) {
-                    address.setSublocalityLevel1(addressSettings.get("sublocality_level_2"));
+                    addressGoogle.setSublocalityLevel1(addressSettings.get("sublocality_level_2"));
                 }
 
                 // null
                 // Cusrow Baug Colony
                 if (addressSettings.containsKey("sublocality_level_3")) {
-                    address.setSublocalityLevel3(addressSettings.get("sublocality_level_3"));
+                    addressGoogle.setSublocalityLevel3(addressSettings.get("sublocality_level_3"));
                 }
 
                 //Украина
                 // Индия
                 if (addressSettings.containsKey("country")) {
-                    address.setCountry(addressSettings.get("country"));
+                    addressGoogle.setCountry(addressSettings.get("country"));
                 }
 
                 //вулиця Челюскінців
                 // null
                 if (addressSettings.containsKey("route")) {
-
-                    address.setRoute(addressSettings.get("route"));
+                    addressGoogle.setRoute(addressSettings.get("route"));
 
                 }
 
                 //Донецька область
                 //Maharashtra
                 if (addressSettings.containsKey("administrative_area_level_1")) {
-                    address.setAdministrativeAreaLevel_1(addressSettings.get("administrative_area_level_1"));
+                    addressGoogle.setAdministrativeAreaLevel_1(addressSettings.get("administrative_area_level_1"));
                 }
 
                 // null
                 // Mumbai
                 if (addressSettings.containsKey("administrative_area_level_2")) {
-                    address.setAdministrativeAreaLevel_2(addressSettings.get("administrative_area_level_2"));
+                    addressGoogle.setAdministrativeAreaLevel_2(addressSettings.get("administrative_area_level_2"));
                 }
 
                 //Донецька міськрада
                 // Cusrow Baug Colony
                 if (addressSettings.containsKey("administrative_area_level_3")) {
-                    address.setAdministrativeAreaLevel_3(addressSettings.get("administrative_area_level_3"));
+                    addressGoogle.setAdministrativeAreaLevel_3(addressSettings.get("administrative_area_level_3"));
                 }
 
                 //189
                 if (addressSettings.containsKey("street_number")) {
-                    address.setStreetNumber(addressSettings.get("street_number"));
+                    addressGoogle.setStreetNumber(addressSettings.get("street_number"));
                 }
 
                 //Донецьк
                 //Mumbai
                 if (addressSettings.containsKey("locality")) {
-                    address.setStreetNumber(addressSettings.get("locality"));
+                    addressGoogle.setStreetNumber(addressSettings.get("locality"));
                 }
             }
 
@@ -248,9 +257,8 @@ public class GoogleAddressProvider implements GeoProviderLatLon {
             LOG.error("IOException ", e);
             throw new GeorgyException(e.getMessage(), e);
         }
-
-        //@todo return set, keyset
-        return address;
+        
+        return addressGoogle;
     }
 
     private static String encodeParams(final Map<String, String> params) {
