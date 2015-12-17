@@ -140,13 +140,11 @@ public class GoogleAddressProvider implements GeoProviderLatLon {
      * @param latLongString String
      */
     @Override
-    public AddressGoogle convertFromLatLong(String latLongString) throws GeorgyException {
+    public AddressGoogle convertFromLatLong(String latLongString, String lang) throws GeorgyException {
 
         final String baseUrl = URL;
         final Map<String, String> params = Maps.newHashMap();
-
-        // @todo func input param lang
-        params.put("language", "ru");
+        params.put("language", lang);
         params.put("sensor", "false");
         params.put("latlng", latLongString);
         final String url = baseUrl + '?' + encodeParams(params);
@@ -155,19 +153,21 @@ public class GoogleAddressProvider implements GeoProviderLatLon {
         try {
             final JSONObject response = JsonReader.read(url);
 
-            //@todo for () getJSONObject(0); -> length
-            final JSONObject location = response.getJSONArray("results").getJSONObject(0);
-            final JSONArray addressComponents = location.getJSONArray("address_components");
-            LOG.debug("addressComponents " + addressComponents);
-
             HashMap<String, String> addressSettings = Maps.newHashMap();
-            for (int i = 0; i < addressComponents.length(); i++) {
-                String longName = addressComponents.getJSONObject(i).getString("long_name");
-                JSONArray types = addressComponents.getJSONObject(i).getJSONArray("types");
-                String type = (String) types.get(0);
-                addressSettings.put(type, longName);
-            }
 
+            for (int j = 0; j < response.getJSONArray("results").length(); j++) {
+
+                final JSONObject location = response.getJSONArray("results").getJSONObject(j);
+                final JSONArray addressComponents = location.getJSONArray("address_components");
+                LOG.debug("addressComponents " + addressComponents);
+
+                for (int i = 0; i < addressComponents.length(); i++) {
+                    String longName = addressComponents.getJSONObject(i).getString("long_name");
+                    JSONArray types = addressComponents.getJSONObject(i).getJSONArray("types");
+                    String type = (String) types.get(0);
+                    addressSettings.put(type, longName);
+                }
+            }
             Set set = addressSettings.keySet();
             LOG.debug("addressSettings.keySet(); " + set);
 
@@ -243,6 +243,10 @@ public class GoogleAddressProvider implements GeoProviderLatLon {
             //Mumbai
             if (addressSettings.containsKey("locality")) {
                 addressGoogle.setStreetNumber(addressSettings.get("locality"));
+            }
+
+            if (addressSettings.containsKey("postal_code")) {
+                addressGoogle.setPostalCode(addressSettings.get("postal_code"));
             }
 
             //@todo add postal_code

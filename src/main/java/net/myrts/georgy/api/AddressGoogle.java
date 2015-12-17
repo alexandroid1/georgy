@@ -175,9 +175,10 @@ public class AddressGoogle {
         this.addressSettingsMap = addressSettingsMap;
     }
 
+
     @Override
     public String toString() {
-        return Joiner.on("|").skipNulls().withKeyValueSeparator(" -> ").join(addressSettingsMap);
+        return Joiner.on(" | ").withKeyValueSeparator(" -> ").join(addressSettingsMap);
     }
 
 }
