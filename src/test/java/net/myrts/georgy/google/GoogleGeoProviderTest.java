@@ -24,7 +24,7 @@ import static org.junit.Assert.fail;
 public class GoogleGeoProviderTest extends BaseProviderTest {
 
     @Test
-    public void shouldConvertAddressToLatLong() throws UnknownHostException, GeorgyException {
+    public void shouldConvertAddressToLatLongIndia() throws UnknownHostException, GeorgyException {
         final String address = "Apollo Bunder, Mumbai, Maharashtra, India";
         final double dLat =18.9203886d;
         final double dLon =72.8301305d;
@@ -34,7 +34,7 @@ public class GoogleGeoProviderTest extends BaseProviderTest {
     }
 
     @Test
-    public void shouldConvertLatLongToAddress() throws UnknownHostException, GeorgyException {
+    public void shouldConvertLatLongToAddressIndia() throws UnknownHostException, GeorgyException {
         final String strLat ="18.92038860";
         final String strLon ="72.83013059999999";
         final String addressCompare = "sublocality_level_2 -> Apollo Bandar " +
@@ -45,25 +45,32 @@ public class GoogleGeoProviderTest extends BaseProviderTest {
                 "| premise -> B " +
                 "| sublocality_level_3 -> Cusrow Baug Colony " +
                 "| administrative_area_level_1 -> Maharashtra " +
-                "| locality -> Mumbai | street_number -> 1218 " +
+                "| locality -> Mumbai " +
+                "| street_number -> 1218 " +
                 "| point_of_interest -> Colaba Depot " +
                 "| postal_code -> 400001";
 
         // http://maps.googleapis.com/maps/api/geocode/json?latlng=18.92038860,72.83013059999999&sensor=false
-        final AddressGoogle addressGoogle = new GoogleAddressProvider().convertFromLatLong(strLat + "," + strLon, "en");
+        final AddressGoogle addressGoogle = new GoogleAddressProvider()
+                .convertFromLatLong(strLat + "," + strLon, "en");
+
         assertEquals(addressCompare, addressGoogle.toString());
+
+        assertEquals("Apollo Bandar", addressGoogle.getSublocalityLevel2());
+        assertEquals("Colaba", addressGoogle.getSublocalityLevel1());
+        assertEquals("India", addressGoogle.getCountry());
+        assertEquals("Shahid Bhagat Singh Marg", addressGoogle.getRoute());
+        assertEquals("Mumbai", addressGoogle.getAdministrativeAreaLevel_2());
+        assertEquals("Cusrow Baug Colony", addressGoogle.getSublocalityLevel3());
+        assertEquals("Maharashtra", addressGoogle.getAdministrativeAreaLevel_1());
+        assertEquals("Mumbai", addressGoogle.getLocality());
+        assertEquals("1218", addressGoogle.getStreetNumber());
+
+
     }
 
     @Test
-    public void shouldConvertLatLongToAddressByString() throws UnknownHostException, GeorgyException {
-
-
-       // final String strLat ="48.033342";
-       // final String strLon ="37.790217";
-
-        // вул. Челюскінців, 265, Донецьк, Донецька область, Украина
-        //48.033475, 37.790281
-        //  http://maps.googleapis.com/maps/api/geocode/json?latlng=48.033475, 37.790281&sensor=false
+    public void shouldConvertLatLongToAddressUkraine() throws UnknownHostException, GeorgyException {
 
         //Donbass Arena
         //  http://maps.googleapis.com/maps/api/geocode/json?latlng=48.021238, 37.810244&sensor=false
@@ -77,10 +84,9 @@ public class GoogleGeoProviderTest extends BaseProviderTest {
                 "| street_number -> 189 " +
                 "| locality -> Донецк " +
                 "| postal_code -> 83000";
-       // 48.021238, 37.810244
 
-        // http://maps.googleapis.com/maps/api/geocode/json?latlng=18.92038860,72.83013059999999&sensor=false
-        final AddressGoogle addressGoogle = new GoogleAddressProvider().convertFromLatLong(strLat+","+strLon, "ru");
+        final AddressGoogle addressGoogle = new GoogleAddressProvider()
+                .convertFromLatLong(strLat + "," + strLon, "ru");
         assertEquals(addressCompare, addressGoogle.toString());
     }
 

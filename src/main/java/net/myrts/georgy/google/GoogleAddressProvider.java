@@ -194,7 +194,7 @@ public class GoogleAddressProvider implements GeoProviderLatLon {
             // null
             // Apollo Bandar
             if (addressSettings.containsKey("sublocality_level_2")) {
-                addressGoogle.setSublocalityLevel1(addressSettings.get("sublocality_level_2"));
+                addressGoogle.setSublocalityLevel2(addressSettings.get("sublocality_level_2"));
             }
 
             // null
@@ -242,14 +242,17 @@ public class GoogleAddressProvider implements GeoProviderLatLon {
             //Донецьк
             //Mumbai
             if (addressSettings.containsKey("locality")) {
-                addressGoogle.setStreetNumber(addressSettings.get("locality"));
+                addressGoogle.setLocality(addressSettings.get("locality"));
             }
 
             if (addressSettings.containsKey("postal_code")) {
                 addressGoogle.setPostalCode(addressSettings.get("postal_code"));
             }
 
-            //@todo add postal_code
+            //@todo add point_of_interest
+
+            //@todo add premise
+
 
         } catch (MalformedURLException e) {
             LOG.error("MalformedURLException ", e);
