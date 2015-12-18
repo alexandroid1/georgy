@@ -165,7 +165,7 @@ public class GoogleAddressProvider implements GeoProviderLatLon {
                     String longName = addressComponents.getJSONObject(i).getString("long_name");
                     JSONArray types = addressComponents.getJSONObject(i).getJSONArray("types");
                     String type = (String) types.get(0);
-                    addressSettings.put(type, longName);
+                    addressSettings.putIfAbsent(type, longName);
                 }
             }
             Set set = addressSettings.keySet();
@@ -177,9 +177,7 @@ public class GoogleAddressProvider implements GeoProviderLatLon {
             Function<String, String> rotateHashMap = Functions.forMap(addressSettings);
             ArrayList<String> values = new ArrayList<>(Collections2.transform(keys, rotateHashMap));
 
-            for (Object key : keys) {
-                LOG.debug(key + " " + addressSettings.get(key));
-            }
+            keys.forEach((Object key) -> LOG.debug(key + " " + addressSettings.get(key)));
 
             addressGoogle.setAddressKeys(keys);
             addressGoogle.setAddressValues(values);
@@ -235,6 +233,7 @@ public class GoogleAddressProvider implements GeoProviderLatLon {
             }
 
             //189
+            //1218
             if (addressSettings.containsKey("street_number")) {
                 addressGoogle.setStreetNumber(addressSettings.get("street_number"));
             }
@@ -245,11 +244,18 @@ public class GoogleAddressProvider implements GeoProviderLatLon {
                 addressGoogle.setLocality(addressSettings.get("locality"));
             }
 
+            //83000
+            //400001
             if (addressSettings.containsKey("postal_code")) {
                 addressGoogle.setPostalCode(addressSettings.get("postal_code"));
             }
 
-            //@todo add point_of_interest
+            //Colaba Depot
+            if (addressSettings.containsKey("point_of_interest")) {
+                addressGoogle.setPointOfInterest(addressSettings.get("point_of_interest"));
+            }
+
+
 
             //@todo add premise
 

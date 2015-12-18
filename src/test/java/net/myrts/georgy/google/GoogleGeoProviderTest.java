@@ -66,6 +66,11 @@ public class GoogleGeoProviderTest extends BaseProviderTest {
         assertEquals("Mumbai", addressGoogle.getLocality());
         assertEquals("1218", addressGoogle.getStreetNumber());
 
+        //@todo add point_of_interest
+
+        //@todo add premise
+
+        //@todo add postal_code
 
     }
 
@@ -76,17 +81,17 @@ public class GoogleGeoProviderTest extends BaseProviderTest {
         //  http://maps.googleapis.com/maps/api/geocode/json?latlng=48.021238, 37.810244&sensor=false
         final String strLat ="48.021238";
         final String strLon ="37.810244";
-        final String addressCompare = "sublocality_level_1 -> Киевский район " +
-                "| country -> Украина " +
-                "| route -> вулиця Челюскінців " +
-                "| administrative_area_level_3 -> Донецкий горсовет " +
-                "| administrative_area_level_1 -> Донецкая область " +
+        final String addressCompare = "sublocality_level_1 -> Kyivs'kyi district " +
+                "| country -> Ukraine " +
+                "| route -> Chelyuskintsiv Street " +
+                "| administrative_area_level_3 -> Donets'ka city council " +
+                "| administrative_area_level_1 -> Donetsk Oblast " +
                 "| street_number -> 189 " +
-                "| locality -> Донецк " +
+                "| locality -> Donetsk " +
                 "| postal_code -> 83000";
 
         final AddressGoogle addressGoogle = new GoogleAddressProvider()
-                .convertFromLatLong(strLat + "," + strLon, "ru");
+                .convertFromLatLong(strLat + "," + strLon, "en");
         assertEquals(addressCompare, addressGoogle.toString());
     }
 

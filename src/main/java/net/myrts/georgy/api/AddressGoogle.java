@@ -31,6 +31,8 @@ public class AddressGoogle {
     private String administrativeAreaLevel_2;
     private String administrativeAreaLevel_1;
 
+    private String pointOfInterest;
+
     public String getStreetNumber() {
         return streetNumber;
     }
@@ -173,6 +175,14 @@ public class AddressGoogle {
 
     public void setAddressSettingsMap(HashMap<String, String> addressSettingsMap) {
         this.addressSettingsMap = addressSettingsMap;
+    }
+
+    public String getPointOfInterest() {
+        return pointOfInterest;
+    }
+
+    public void setPointOfInterest(String pointOfInterest) {
+        this.pointOfInterest = pointOfInterest;
     }
 
 
