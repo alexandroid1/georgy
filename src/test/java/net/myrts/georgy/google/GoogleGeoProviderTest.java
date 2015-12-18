@@ -1,5 +1,6 @@
 package net.myrts.georgy.google;
 
+import com.google.api.client.repackaged.com.google.common.base.Joiner;
 import net.myrts.georgy.BaseProviderTest;
 import net.myrts.georgy.api.Address;
 import net.myrts.georgy.api.AddressGoogle;
@@ -56,6 +57,10 @@ public class GoogleGeoProviderTest extends BaseProviderTest {
 
         assertEquals(addressCompare, addressGoogle.toString());
 
+        assertEquals(addressCompare,
+                Joiner.on(" | ").withKeyValueSeparator(" -> ").
+                join(addressGoogle.getAddressSettingsMap()));
+      
         assertEquals("Apollo Bandar", addressGoogle.getSublocalityLevel2());
         assertEquals("Colaba", addressGoogle.getSublocalityLevel1());
         assertEquals("India", addressGoogle.getCountry());
