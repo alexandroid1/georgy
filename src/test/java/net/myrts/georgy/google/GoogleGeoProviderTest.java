@@ -65,12 +65,12 @@ public class GoogleGeoProviderTest extends BaseProviderTest {
         assertEquals("Maharashtra", addressGoogle.getAdministrativeAreaLevel_1());
         assertEquals("Mumbai", addressGoogle.getLocality());
         assertEquals("1218", addressGoogle.getStreetNumber());
+        assertEquals("400001", addressGoogle.getPostalCode());
+        assertEquals("Colaba Depot", addressGoogle.getPointOfInterest());
 
-        //@todo add point_of_interest
 
         //@todo add premise
 
-        //@todo add postal_code
 
     }
 
