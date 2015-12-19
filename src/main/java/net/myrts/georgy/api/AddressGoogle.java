@@ -195,7 +195,10 @@ public class AddressGoogle {
 
     @Override
     public String toString() {
-        return Joiner.on(" | ").withKeyValueSeparator(" -> ").join(addressSettingsMap);
+        return Joiner.on(" | ").
+                withKeyValueSeparator(" -> ")
+                .useForNull("no such value").
+                join(addressSettingsMap);
     }
 
 }
