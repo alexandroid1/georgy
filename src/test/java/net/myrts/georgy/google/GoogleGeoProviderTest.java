@@ -59,7 +59,7 @@ public class GoogleGeoProviderTest extends BaseProviderTest {
         assertEquals(addressCompare, addressGoogle.toString());
 
         assertEquals(addressCompare,
-                Joiner.on(" | ").withKeyValueSeparator(" -> ").
+                Joiner.on(" | ").withKeyValueSeparator(" -> ").useForNull("No such HashMap Element").
                 join(addressGoogle.getAddressSettingsMap()));
 
         assertEquals("sublocality_level_2, " +
