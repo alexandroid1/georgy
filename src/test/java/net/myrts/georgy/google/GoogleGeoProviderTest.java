@@ -62,6 +62,32 @@ public class GoogleGeoProviderTest extends BaseProviderTest {
                 Joiner.on(" | ").withKeyValueSeparator(" -> ").
                 join(addressGoogle.getAddressSettingsMap()));
 
+        assertEquals("sublocality_level_2, " +
+                "sublocality_level_1, " +
+                "country, route, " +
+                "administrative_area_level_2, " +
+                "premise, sublocality_level_3, " +
+                "administrative_area_level_1, " +
+                "locality, street_number, " +
+                "point_of_interest, " +
+                "postal_code",
+                Joiner.on(", ").useForNull("No key").join(addressGoogle.getAddressKeys()));
+
+        assertEquals("Apollo Bandar, " +
+                        "Colaba, " +
+                        "India, " +
+                        "Shahid Bhagat Singh Marg, " +
+                        "Mumbai, " +
+                        "B, " +
+                        "Cusrow Baug Colony, " +
+                        "Maharashtra, " +
+                        "Mumbai, " +
+                        "1218, " +
+                        "Colaba " +
+                        "Depot, " +
+                        "400001",
+                Joiner.on(", ").useForNull("No value").join(addressGoogle.getAddressValues()));
+
         assertEquals("Apollo Bandar", addressGoogle.getSublocalityLevel2());
         assertEquals("Colaba", addressGoogle.getSublocalityLevel1());
         assertEquals("India", addressGoogle.getCountry());
