@@ -30,8 +30,8 @@ public class AddressGoogle {
     private String administrativeAreaLevel_3;
     private String administrativeAreaLevel_2;
     private String administrativeAreaLevel_1;
-
     private String pointOfInterest;
+    private String premise;
 
     public String getStreetNumber() {
         return streetNumber;
@@ -185,6 +185,13 @@ public class AddressGoogle {
         this.pointOfInterest = pointOfInterest;
     }
 
+    public String getPremise() {
+        return premise;
+    }
+
+    public void setPremise(String premise) {
+        this.premise = premise;
+    }
 
     @Override
     public String toString() {

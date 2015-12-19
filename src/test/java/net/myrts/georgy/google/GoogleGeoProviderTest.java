@@ -21,6 +21,7 @@ import static org.junit.Assert.fail;
 
 /**
  * Created by Oleksandr Pavlov avpavlov108@gmail.com on 15.11.15.
+ * @author <a href="mailto:avpavlov108@gmail.com">Oleksandr Pavlov</a>
  */
 public class GoogleGeoProviderTest extends BaseProviderTest {
 
@@ -99,11 +100,7 @@ public class GoogleGeoProviderTest extends BaseProviderTest {
         assertEquals("1218", addressGoogle.getStreetNumber());
         assertEquals("400001", addressGoogle.getPostalCode());
         assertEquals("Colaba Depot", addressGoogle.getPointOfInterest());
-
-
-        //@todo add premise
-
-
+        assertEquals("B", addressGoogle.getPremise());
     }
 
     @Test

@@ -39,6 +39,7 @@ import static com.google.common.collect.Maps.newHashMap;
 
 /**
  * Created by Oleksandr Pavlov avpavlov108@gmail.com on 15.11.15.
+ * @author <a href="mailto:avpavlov108@gmail.com">Oleksandr Pavlov</a>
  */
 
 /**
@@ -50,8 +51,7 @@ import static com.google.common.collect.Maps.newHashMap;
 public class GoogleAddressProvider implements GeoProviderLatLon {
 
     /**
-     * Here the fullAddress String is in format like
-     * "address,city,state,zipcode". Here address means "street number + route"
+     * Here the fullAddress String
      */
     private static final String URL = "http://maps.googleapis.com/maps/api/geocode/json";
 
@@ -59,13 +59,7 @@ public class GoogleAddressProvider implements GeoProviderLatLon {
 
     /**
      * Create an java.net.URL object by passing the request URL in
-     * constructor. Here you can see I am converting the fullAddress String
-     * in UTF-8 format. You will get Exception if you don't convert your
-     * address in UTF-8 format. Perhaps google loves UTF-8 format. :) In
-     * parameter we also need to pass "sensor" parameter. sensor (required
-     * parameter) — Indicates whether or not the geocoding request comes
-     * from a device with a location sensor. This value must be either true
-     * or false.
+     * constructor.
      *
      * @param fullAddress String
      * @return geoLocation GeoLocation
@@ -268,9 +262,9 @@ public class GoogleAddressProvider implements GeoProviderLatLon {
                         addressGoogle.setPointOfInterest(addressSettings.get("point_of_interest"));
                     }
 
-
-                    //@todo add premise
-
+                    if (addressSettings.containsKey("premise")) {
+                        addressGoogle.setPremise(addressSettings.get("premise"));
+                    }
 
                 } catch (MalformedURLException e) {
                     LOG.error("MalformedURLException ", e);
