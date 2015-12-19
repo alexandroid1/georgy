@@ -36,8 +36,9 @@ public class GoogleGeoProviderTest extends BaseProviderTest {
 
     @Test
     public void shouldConvertLatLongToAddressIndia() throws UnknownHostException, GeorgyException {
-        final String strLat ="18.92038860";
-        final String strLon ="72.83013059999999";
+        final double dLat =18.92038860d;
+        final double dLon =72.83013059d;
+
         final String addressCompare = "sublocality_level_2 -> Apollo Bandar " +
                 "| sublocality_level_1 -> Colaba " +
                 "| country -> India " +
@@ -53,14 +54,14 @@ public class GoogleGeoProviderTest extends BaseProviderTest {
 
         // http://maps.googleapis.com/maps/api/geocode/json?latlng=18.92038860,72.83013059999999&sensor=false
         final AddressGoogle addressGoogle = new GoogleAddressProvider()
-                .convertFromLatLong(strLat + "," + strLon, "en");
+                .convertFromLatLong(dLat, dLon, "en");
 
         assertEquals(addressCompare, addressGoogle.toString());
 
         assertEquals(addressCompare,
                 Joiner.on(" | ").withKeyValueSeparator(" -> ").
                 join(addressGoogle.getAddressSettingsMap()));
-      
+
         assertEquals("Apollo Bandar", addressGoogle.getSublocalityLevel2());
         assertEquals("Colaba", addressGoogle.getSublocalityLevel1());
         assertEquals("India", addressGoogle.getCountry());
@@ -84,8 +85,8 @@ public class GoogleGeoProviderTest extends BaseProviderTest {
 
         //Donbass Arena
         //  http://maps.googleapis.com/maps/api/geocode/json?latlng=48.021238, 37.810244&sensor=false
-        final String strLat ="48.021238";
-        final String strLon ="37.810244";
+        final double dLat =48.021238d;
+        final double dLon =37.810244d;
         final String addressCompare = "sublocality_level_1 -> Kyivs'kyi district " +
                 "| country -> Ukraine " +
                 "| route -> Chelyuskintsiv Street " +
@@ -96,7 +97,7 @@ public class GoogleGeoProviderTest extends BaseProviderTest {
                 "| postal_code -> 83000";
 
         final AddressGoogle addressGoogle = new GoogleAddressProvider()
-                .convertFromLatLong(strLat + "," + strLon, "en");
+                .convertFromLatLong(dLat, dLon, "en");
         assertEquals(addressCompare, addressGoogle.toString());
     }
 

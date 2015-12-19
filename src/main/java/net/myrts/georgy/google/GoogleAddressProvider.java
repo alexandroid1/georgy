@@ -137,141 +137,155 @@ public class GoogleAddressProvider implements GeoProviderLatLon {
     /**
      * convertFromLatLong
      *
-     * @param latLongString String
+     * @param dLat double
+     * @param dLon double
+     * @param lang String
      */
     @Override
-    public AddressGoogle convertFromLatLong(String latLongString, String lang) throws GeorgyException {
+    public AddressGoogle convertFromLatLong(double dLat, double dLon, String lang) throws GeorgyException {
+        if (!(dLat > -90 && dLat <= 90)) {
+            LOG.error("Latitude should be in -90..90 range");
+            throw new GeorgyException("Failed to get response " +
+                    "Latitude should be in -90..90 range");
+        } else {
+            if (!(dLon > -180 && dLon <= 180)) {
+                LOG.error("Longitude should be in -180..180 range");
+                throw new GeorgyException("Failed to get response " +
+                        "Longitude should be in -180..180 range");
+            } else {
 
-        final String baseUrl = URL;
-        final Map<String, String> params = Maps.newHashMap();
-        params.put("language", lang);
-        params.put("sensor", "false");
-        params.put("latlng", latLongString);
-        final String url = baseUrl + '?' + encodeParams(params);
-        LOG.debug("url ", url);
-        AddressGoogle addressGoogle = new AddressGoogle();
-        try {
-            final JSONObject response = JsonReader.read(url);
+                final String latLongString = String.valueOf(dLat) +","+ String.valueOf(dLon);
+                final String baseUrl = URL;
+                final Map<String, String> params = Maps.newHashMap();
+                params.put("language", lang);
+                params.put("sensor", "false");
+                params.put("latlng", latLongString);
+                final String url = baseUrl + '?' + encodeParams(params);
+                LOG.debug("url ", url);
+                AddressGoogle addressGoogle = new AddressGoogle();
+                try {
+                    final JSONObject response = JsonReader.read(url);
 
-            HashMap<String, String> addressSettings = Maps.newHashMap();
+                    HashMap<String, String> addressSettings = Maps.newHashMap();
 
-            for (int j = 0; j < response.getJSONArray("results").length(); j++) {
+                    for (int j = 0; j < response.getJSONArray("results").length(); j++) {
 
-                final JSONObject location = response.getJSONArray("results").getJSONObject(j);
-                final JSONArray addressComponents = location.getJSONArray("address_components");
-                LOG.debug("addressComponents " + addressComponents);
+                        final JSONObject location = response.getJSONArray("results").getJSONObject(j);
+                        final JSONArray addressComponents = location.getJSONArray("address_components");
+                        LOG.debug("addressComponents " + addressComponents);
 
-                for (int i = 0; i < addressComponents.length(); i++) {
-                    String longName = addressComponents.getJSONObject(i).getString("long_name");
-                    JSONArray types = addressComponents.getJSONObject(i).getJSONArray("types");
-                    String type = (String) types.get(0);
-                    addressSettings.putIfAbsent(type, longName);
+                        for (int i = 0; i < addressComponents.length(); i++) {
+                            String longName = addressComponents.getJSONObject(i).getString("long_name");
+                            JSONArray types = addressComponents.getJSONObject(i).getJSONArray("types");
+                            String type = (String) types.get(0);
+                            addressSettings.putIfAbsent(type, longName);
+                        }
+                    }
+                    Set set = addressSettings.keySet();
+                    LOG.debug("addressSettings.keySet(); " + set);
+
+                    ArrayList<String> keys = new ArrayList<>(set);
+                    LOG.debug("keys " + keys);
+
+                    Function<String, String> rotateHashMap = Functions.forMap(addressSettings);
+                    ArrayList<String> values = new ArrayList<>(Collections2.transform(keys, rotateHashMap));
+
+                    keys.forEach((Object key) -> LOG.debug(key + " " + addressSettings.get(key)));
+
+                    addressGoogle.setAddressKeys(keys);
+                    addressGoogle.setAddressValues(values);
+                    addressGoogle.setAddressSettingsMap(addressSettings);
+
+                    // Київський район
+                    // Colaba
+                    if (addressSettings.containsKey("sublocality_level_1")) {
+                        addressGoogle.setSublocalityLevel1(addressSettings.get("sublocality_level_1"));
+                    }
+
+                    // null
+                    // Apollo Bandar
+                    if (addressSettings.containsKey("sublocality_level_2")) {
+                        addressGoogle.setSublocalityLevel2(addressSettings.get("sublocality_level_2"));
+                    }
+
+                    // null
+                    // Cusrow Baug Colony
+                    if (addressSettings.containsKey("sublocality_level_3")) {
+                        addressGoogle.setSublocalityLevel3(addressSettings.get("sublocality_level_3"));
+                    }
+
+                    //Украина
+                    // Индия
+                    if (addressSettings.containsKey("country")) {
+                        addressGoogle.setCountry(addressSettings.get("country"));
+                    }
+
+                    //вулиця Челюскінців
+                    // null
+                    if (addressSettings.containsKey("route")) {
+                        addressGoogle.setRoute(addressSettings.get("route"));
+
+                    }
+
+                    //Донецька область
+                    //Maharashtra
+                    if (addressSettings.containsKey("administrative_area_level_1")) {
+                        addressGoogle.setAdministrativeAreaLevel_1(addressSettings.get("administrative_area_level_1"));
+                    }
+
+                    // null
+                    // Mumbai
+                    if (addressSettings.containsKey("administrative_area_level_2")) {
+                        addressGoogle.setAdministrativeAreaLevel_2(addressSettings.get("administrative_area_level_2"));
+                    }
+
+                    //Донецька міськрада
+                    // Cusrow Baug Colony
+                    if (addressSettings.containsKey("administrative_area_level_3")) {
+                        addressGoogle.setAdministrativeAreaLevel_3(addressSettings.get("administrative_area_level_3"));
+                    }
+
+                    //189
+                    //1218
+                    if (addressSettings.containsKey("street_number")) {
+                        addressGoogle.setStreetNumber(addressSettings.get("street_number"));
+                    }
+
+                    //Донецьк
+                    //Mumbai
+                    if (addressSettings.containsKey("locality")) {
+                        addressGoogle.setLocality(addressSettings.get("locality"));
+                    }
+
+                    //83000
+                    //400001
+                    if (addressSettings.containsKey("postal_code")) {
+                        addressGoogle.setPostalCode(addressSettings.get("postal_code"));
+                    }
+
+                    //Colaba Depot
+                    if (addressSettings.containsKey("point_of_interest")) {
+                        addressGoogle.setPointOfInterest(addressSettings.get("point_of_interest"));
+                    }
+
+
+                    //@todo add premise
+
+
+                } catch (MalformedURLException e) {
+                    LOG.error("MalformedURLException ", e);
+                    throw new GeorgyException(e.getMessage(), e);
+                } catch (UnsupportedEncodingException e) {
+                    LOG.error("UnsupportedEncodingException ", e);
+                    throw new GeorgyException(e.getMessage(), e);
+                } catch (IOException e) {
+                    LOG.error("IOException ", e);
+                    throw new GeorgyException(e.getMessage(), e);
                 }
+
+                return addressGoogle;
             }
-            Set set = addressSettings.keySet();
-            LOG.debug("addressSettings.keySet(); " + set);
-
-            ArrayList<String> keys = new ArrayList<>(set);
-            LOG.debug("keys " + keys);
-
-            Function<String, String> rotateHashMap = Functions.forMap(addressSettings);
-            ArrayList<String> values = new ArrayList<>(Collections2.transform(keys, rotateHashMap));
-
-            keys.forEach((Object key) -> LOG.debug(key + " " + addressSettings.get(key)));
-
-            addressGoogle.setAddressKeys(keys);
-            addressGoogle.setAddressValues(values);
-            addressGoogle.setAddressSettingsMap(addressSettings);
-
-            // Київський район
-            // Colaba
-            if (addressSettings.containsKey("sublocality_level_1")) {
-                addressGoogle.setSublocalityLevel1(addressSettings.get("sublocality_level_1"));
-            }
-
-            // null
-            // Apollo Bandar
-            if (addressSettings.containsKey("sublocality_level_2")) {
-                addressGoogle.setSublocalityLevel2(addressSettings.get("sublocality_level_2"));
-            }
-
-            // null
-            // Cusrow Baug Colony
-            if (addressSettings.containsKey("sublocality_level_3")) {
-                addressGoogle.setSublocalityLevel3(addressSettings.get("sublocality_level_3"));
-            }
-
-            //Украина
-            // Индия
-            if (addressSettings.containsKey("country")) {
-                addressGoogle.setCountry(addressSettings.get("country"));
-            }
-
-            //вулиця Челюскінців
-            // null
-            if (addressSettings.containsKey("route")) {
-                addressGoogle.setRoute(addressSettings.get("route"));
-
-            }
-
-            //Донецька область
-            //Maharashtra
-            if (addressSettings.containsKey("administrative_area_level_1")) {
-                addressGoogle.setAdministrativeAreaLevel_1(addressSettings.get("administrative_area_level_1"));
-            }
-
-            // null
-            // Mumbai
-            if (addressSettings.containsKey("administrative_area_level_2")) {
-                addressGoogle.setAdministrativeAreaLevel_2(addressSettings.get("administrative_area_level_2"));
-            }
-
-            //Донецька міськрада
-            // Cusrow Baug Colony
-            if (addressSettings.containsKey("administrative_area_level_3")) {
-                addressGoogle.setAdministrativeAreaLevel_3(addressSettings.get("administrative_area_level_3"));
-            }
-
-            //189
-            //1218
-            if (addressSettings.containsKey("street_number")) {
-                addressGoogle.setStreetNumber(addressSettings.get("street_number"));
-            }
-
-            //Донецьк
-            //Mumbai
-            if (addressSettings.containsKey("locality")) {
-                addressGoogle.setLocality(addressSettings.get("locality"));
-            }
-
-            //83000
-            //400001
-            if (addressSettings.containsKey("postal_code")) {
-                addressGoogle.setPostalCode(addressSettings.get("postal_code"));
-            }
-
-            //Colaba Depot
-            if (addressSettings.containsKey("point_of_interest")) {
-                addressGoogle.setPointOfInterest(addressSettings.get("point_of_interest"));
-            }
-
-
-
-            //@todo add premise
-
-
-        } catch (MalformedURLException e) {
-            LOG.error("MalformedURLException ", e);
-            throw new GeorgyException(e.getMessage(), e);
-        } catch (UnsupportedEncodingException e) {
-            LOG.error("UnsupportedEncodingException ", e);
-            throw new GeorgyException(e.getMessage(), e);
-        } catch (IOException e) {
-            LOG.error("IOException ", e);
-            throw new GeorgyException(e.getMessage(), e);
         }
-
-        return addressGoogle;
     }
 
     private static String encodeParams(final Map<String, String> params) {
