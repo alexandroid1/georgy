@@ -1,30 +1,18 @@
 package net.myrts.georgy.google;
-
 import com.google.api.client.repackaged.com.google.common.base.Joiner;
 import net.myrts.georgy.BaseProviderTest;
-import net.myrts.georgy.api.Address;
 import net.myrts.georgy.api.AddressGoogle;
 import net.myrts.georgy.api.GeoLocation;
 import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
 import net.myrts.georgy.api.GeorgyException;
-
 import java.net.UnknownHostException;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-
 
 /**
  * Created by Oleksandr Pavlov avpavlov108@gmail.com on 15.11.15.
  * @author <a href="mailto:avpavlov108@gmail.com">Oleksandr Pavlov</a>
  */
 public class GoogleGeoProviderTest extends BaseProviderTest {
-
     @Test
     public void shouldConvertAddressToLatLongIndia() throws UnknownHostException, GeorgyException {
         final String address = "Apollo Bunder, Mumbai, Maharashtra, India";
@@ -105,7 +93,6 @@ public class GoogleGeoProviderTest extends BaseProviderTest {
 
     @Test
     public void shouldConvertLatLongToAddressUkraine() throws UnknownHostException, GeorgyException {
-
         //Donbass Arena Donetsk city
         //  http://maps.googleapis.com/maps/api/geocode/json?latlng=48.021238, 37.810244&sensor=false
         final double dLat =48.021238d;
@@ -157,5 +144,4 @@ public class GoogleGeoProviderTest extends BaseProviderTest {
         assertEquals("Donetsk", addressGoogle.getLocality());
         assertEquals("83000", addressGoogle.getPostalCode());
     }
-
 }

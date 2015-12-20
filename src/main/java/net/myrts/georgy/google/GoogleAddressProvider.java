@@ -9,7 +9,6 @@ import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.*;
 
-
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -25,17 +24,10 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
-
-
 import javax.annotation.Nullable;
-import java.util.List;
 import java.util.Map;
-
-import static com.google.common.collect.Maps.newHashMap;
-
 
 /**
  * Created by Oleksandr Pavlov avpavlov108@gmail.com on 15.11.15.
