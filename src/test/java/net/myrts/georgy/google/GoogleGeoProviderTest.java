@@ -106,7 +106,7 @@ public class GoogleGeoProviderTest extends BaseProviderTest {
     @Test
     public void shouldConvertLatLongToAddressUkraine() throws UnknownHostException, GeorgyException {
 
-        //Donbass Arena
+        //Donbass Arena Donetsk city
         //  http://maps.googleapis.com/maps/api/geocode/json?latlng=48.021238, 37.810244&sensor=false
         final double dLat =48.021238d;
         final double dLon =37.810244d;
@@ -121,7 +121,41 @@ public class GoogleGeoProviderTest extends BaseProviderTest {
 
         final AddressGoogle addressGoogle = new GoogleAddressProvider()
                 .convertFromLatLong(dLat, dLon, "en");
+
         assertEquals(addressCompare, addressGoogle.toString());
+
+        assertEquals(addressCompare,
+                Joiner.on(" | ").withKeyValueSeparator(" -> ").useForNull("No such HashMap Element").
+                        join(addressGoogle.getAddressSettingsMap()));
+
+        assertEquals("sublocality_level_1, " +
+                        "country, " +
+                        "route, " +
+                        "administrative_area_level_3, " +
+                        "administrative_area_level_1, " +
+                        "street_number, " +
+                        "locality, " +
+                        "postal_code",
+                Joiner.on(", ").useForNull("No key").join(addressGoogle.getAddressKeys()));
+
+        assertEquals("Kyivs'kyi district, " +
+                        "Ukraine, " +
+                        "Chelyuskintsiv Street, " +
+                        "Donets'ka city council, " +
+                        "Donetsk Oblast, " +
+                        "189, " +
+                        "Donetsk, " +
+                        "83000",
+                Joiner.on(", ").useForNull("No value").join(addressGoogle.getAddressValues()));
+
+        assertEquals("Kyivs'kyi district", addressGoogle.getSublocalityLevel1());
+        assertEquals("Ukraine", addressGoogle.getCountry());
+        assertEquals("Chelyuskintsiv Street", addressGoogle.getRoute());
+        assertEquals("Donets'ka city council", addressGoogle.getAdministrativeAreaLevel_3());
+        assertEquals("Donetsk Oblast", addressGoogle.getAdministrativeAreaLevel_1());
+        assertEquals("189", addressGoogle.getStreetNumber());
+        assertEquals("Donetsk", addressGoogle.getLocality());
+        assertEquals("83000", addressGoogle.getPostalCode());
     }
 
 }
