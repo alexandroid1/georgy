@@ -208,10 +208,9 @@ public class GoogleAddressProvider implements GeoProviderLatLon {
                                         e1.printStackTrace();
                                     }
                                 }
-
                             }
                         });
-
+                        
                     } else {
                         LOG.debug(response.getString("status"));
                         throw new GeorgyException("Failed to get response " + response);
