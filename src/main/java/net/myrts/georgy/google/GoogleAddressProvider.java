@@ -3,6 +3,7 @@ package net.myrts.georgy.google;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -20,6 +21,7 @@ import net.myrts.georgy.api.*;
 import net.myrts.georgy.google.stubsConvertFromLatLong.JsonReader;
 import net.myrts.georgy.google.stubsConvertToLatLong.GoogleResponse;
 import net.myrts.georgy.google.stubsConvertToLatLong.Result;
+import org.apache.commons.beanutils.BeanUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -188,77 +190,209 @@ public class GoogleAddressProvider implements GeoProviderLatLon {
                         // Київський район
                         // Colaba
                         if (addressSettings.containsKey("sublocality_level_1")) {
-                            addressGoogle.setSublocalityLevel1(addressSettings.get("sublocality_level_1"));
+                            try {
+                                BeanUtils.setProperty(addressGoogle,
+                                        "sublocality_level_1",
+                                        addressSettings.get("sublocality_level_1"));
+                            } catch (IllegalAccessException e) {
+                                LOG.error("IllegalAccessException ", e);
+                                throw new GeorgyException(e.getMessage(), e);
+                            } catch (InvocationTargetException e) {
+                                LOG.error("IllegalAccessException ", e);
+                                throw new GeorgyException(e.getMessage(), e);
+                            }
+
                         }
 
                         // null
                         // Apollo Bandar
                         if (addressSettings.containsKey("sublocality_level_2")) {
-                            addressGoogle.setSublocalityLevel2(addressSettings.get("sublocality_level_2"));
+                            try {
+                                BeanUtils.setProperty(addressGoogle,
+                                        "sublocality_level_2",
+                                        addressSettings.get("sublocality_level_2"));
+                            } catch (IllegalAccessException e) {
+                                LOG.error("IllegalAccessException ", e);
+                                throw new GeorgyException(e.getMessage(), e);
+                            } catch (InvocationTargetException e) {
+                                LOG.error("IllegalAccessException ", e);
+                                throw new GeorgyException(e.getMessage(), e);
+                            }
+
                         }
 
                         // null
                         // Cusrow Baug Colony
                         if (addressSettings.containsKey("sublocality_level_3")) {
-                            addressGoogle.setSublocalityLevel3(addressSettings.get("sublocality_level_3"));
+                            try {
+                                BeanUtils.setProperty(addressGoogle,
+                                        "sublocality_level_3",
+                                        addressSettings.get("sublocality_level_3"));
+                            } catch (IllegalAccessException e) {
+                                LOG.error("IllegalAccessException ", e);
+                                throw new GeorgyException(e.getMessage(), e);
+                            } catch (InvocationTargetException e) {
+                                LOG.error("IllegalAccessException ", e);
+                                throw new GeorgyException(e.getMessage(), e);
+                            }
                         }
 
                         //Украина
                         // Индия
                         if (addressSettings.containsKey("country")) {
-                            addressGoogle.setCountry(addressSettings.get("country"));
+                            try {
+                                BeanUtils.setProperty(addressGoogle,
+                                        "country",
+                                        addressSettings.get("country"));
+                            } catch (IllegalAccessException e) {
+                                LOG.error("IllegalAccessException ", e);
+                                throw new GeorgyException(e.getMessage(), e);
+                            } catch (InvocationTargetException e) {
+                                LOG.error("IllegalAccessException ", e);
+                                throw new GeorgyException(e.getMessage(), e);
+                            }
                         }
 
                         //вулиця Челюскінців
                         // null
                         if (addressSettings.containsKey("route")) {
-                            addressGoogle.setRoute(addressSettings.get("route"));
+                            try {
+                                BeanUtils.setProperty(addressGoogle,
+                                        "route",
+                                        addressSettings.get("route"));
+                            } catch (IllegalAccessException e) {
+                                LOG.error("IllegalAccessException ", e);
+                                throw new GeorgyException(e.getMessage(), e);
+                            } catch (InvocationTargetException e) {
+                                LOG.error("IllegalAccessException ", e);
+                                throw new GeorgyException(e.getMessage(), e);
+                            }
 
                         }
 
                         //Донецька область
                         //Maharashtra
                         if (addressSettings.containsKey("administrative_area_level_1")) {
-                            addressGoogle.setAdministrativeAreaLevel_1(addressSettings.get("administrative_area_level_1"));
+                            try {
+                                BeanUtils.setProperty(addressGoogle,
+                                        "administrative_area_level_1",
+                                        addressSettings.get("administrative_area_level_1"));
+                            } catch (IllegalAccessException e) {
+                                LOG.error("IllegalAccessException ", e);
+                                throw new GeorgyException(e.getMessage(), e);
+                            } catch (InvocationTargetException e) {
+                                LOG.error("IllegalAccessException ", e);
+                                throw new GeorgyException(e.getMessage(), e);
+                            }
                         }
 
                         // null
                         // Mumbai
                         if (addressSettings.containsKey("administrative_area_level_2")) {
-                            addressGoogle.setAdministrativeAreaLevel_2(addressSettings.get("administrative_area_level_2"));
+                            try {
+                                BeanUtils.setProperty(addressGoogle,
+                                        "administrative_area_level_2",
+                                        addressSettings.get("administrative_area_level_2"));
+                            } catch (IllegalAccessException e) {
+                                LOG.error("IllegalAccessException ", e);
+                                throw new GeorgyException(e.getMessage(), e);
+                            } catch (InvocationTargetException e) {
+                                LOG.error("IllegalAccessException ", e);
+                                throw new GeorgyException(e.getMessage(), e);
+                            }
                         }
 
                         //Донецька міськрада
                         // Cusrow Baug Colony
                         if (addressSettings.containsKey("administrative_area_level_3")) {
-                            addressGoogle.setAdministrativeAreaLevel_3(addressSettings.get("administrative_area_level_3"));
+                            try {
+                                BeanUtils.setProperty(addressGoogle,
+                                        "administrative_area_level_3",
+                                        addressSettings.get("administrative_area_level_3"));
+                            } catch (IllegalAccessException e) {
+                                LOG.error("IllegalAccessException ", e);
+                                throw new GeorgyException(e.getMessage(), e);
+                            } catch (InvocationTargetException e) {
+                                LOG.error("IllegalAccessException ", e);
+                                throw new GeorgyException(e.getMessage(), e);
+                            }
                         }
 
                         //189
                         //1218
                         if (addressSettings.containsKey("street_number")) {
-                            addressGoogle.setStreetNumber(addressSettings.get("street_number"));
+                            try {
+                                BeanUtils.setProperty(addressGoogle,
+                                        "street_number",
+                                        addressSettings.get("street_number"));
+                            } catch (IllegalAccessException e) {
+                                LOG.error("IllegalAccessException ", e);
+                                throw new GeorgyException(e.getMessage(), e);
+                            } catch (InvocationTargetException e) {
+                                LOG.error("IllegalAccessException ", e);
+                                throw new GeorgyException(e.getMessage(), e);
+                            }
                         }
 
                         //Донецьк
                         //Mumbai
                         if (addressSettings.containsKey("locality")) {
-                            addressGoogle.setLocality(addressSettings.get("locality"));
+                            try {
+                                BeanUtils.setProperty(addressGoogle,
+                                        "locality",
+                                        addressSettings.get("locality"));
+                            } catch (IllegalAccessException e) {
+                                LOG.error("IllegalAccessException ", e);
+                                throw new GeorgyException(e.getMessage(), e);
+                            } catch (InvocationTargetException e) {
+                                LOG.error("IllegalAccessException ", e);
+                                throw new GeorgyException(e.getMessage(), e);
+                            }
                         }
 
                         //83000
                         //400001
                         if (addressSettings.containsKey("postal_code")) {
-                            addressGoogle.setPostalCode(addressSettings.get("postal_code"));
+                            try {
+                                BeanUtils.setProperty(addressGoogle,
+                                        "postal_code",
+                                        addressSettings.get("postal_code"));
+                            } catch (IllegalAccessException e) {
+                                LOG.error("IllegalAccessException ", e);
+                                throw new GeorgyException(e.getMessage(), e);
+                            } catch (InvocationTargetException e) {
+                                LOG.error("IllegalAccessException ", e);
+                                throw new GeorgyException(e.getMessage(), e);
+                            }
                         }
 
                         //Colaba Depot
                         if (addressSettings.containsKey("point_of_interest")) {
-                            addressGoogle.setPointOfInterest(addressSettings.get("point_of_interest"));
+                            try {
+                                BeanUtils.setProperty(addressGoogle,
+                                        "point_of_interest",
+                                        addressSettings.get("point_of_interest"));
+                            } catch (IllegalAccessException e) {
+                                LOG.error("IllegalAccessException ", e);
+                                throw new GeorgyException(e.getMessage(), e);
+                            } catch (InvocationTargetException e) {
+                                LOG.error("IllegalAccessException ", e);
+                                throw new GeorgyException(e.getMessage(), e);
+                            }
                         }
 
                         if (addressSettings.containsKey("premise")) {
-                            addressGoogle.setPremise(addressSettings.get("premise"));
+                            try {
+                                BeanUtils.setProperty(addressGoogle,
+                                        "premise",
+                                        addressSettings.get("premise"));
+                            } catch (IllegalAccessException e) {
+                                LOG.error("IllegalAccessException ", e);
+                                throw new GeorgyException(e.getMessage(), e);
+                            } catch (InvocationTargetException e) {
+                                LOG.error("IllegalAccessException ", e);
+                                throw new GeorgyException(e.getMessage(), e);
+                            }
                         }
                     } else {
                         LOG.debug(response.getString("status"));

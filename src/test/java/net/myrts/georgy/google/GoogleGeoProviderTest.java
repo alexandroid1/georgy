@@ -77,17 +77,17 @@ public class GoogleGeoProviderTest extends BaseProviderTest {
                         "400001",
                 Joiner.on(", ").useForNull("No value").join(addressGoogle.getAddressValues()));
 
-        assertEquals("Apollo Bandar", addressGoogle.getSublocalityLevel2());
-        assertEquals("Colaba", addressGoogle.getSublocalityLevel1());
+        assertEquals("Apollo Bandar", addressGoogle.getSublocality_level_2());
+        assertEquals("Colaba", addressGoogle.getSublocality_level_1());
         assertEquals("India", addressGoogle.getCountry());
         assertEquals("Shahid Bhagat Singh Marg", addressGoogle.getRoute());
-        assertEquals("Mumbai", addressGoogle.getAdministrativeAreaLevel_2());
-        assertEquals("Cusrow Baug Colony", addressGoogle.getSublocalityLevel3());
-        assertEquals("Maharashtra", addressGoogle.getAdministrativeAreaLevel_1());
+        assertEquals("Mumbai", addressGoogle.getAdministrative_area_level_2());
+        assertEquals("Cusrow Baug Colony", addressGoogle.getSublocality_level_3());
+        assertEquals("Maharashtra", addressGoogle.getAdministrative_area_level_1());
         assertEquals("Mumbai", addressGoogle.getLocality());
-        assertEquals("1218", addressGoogle.getStreetNumber());
-        assertEquals("400001", addressGoogle.getPostalCode());
-        assertEquals("Colaba Depot", addressGoogle.getPointOfInterest());
+        assertEquals("1218", addressGoogle.getStreet_number());
+        assertEquals("400001", addressGoogle.getPostal_code());
+        assertEquals("Colaba Depot", addressGoogle.getPoint_of_interest());
         assertEquals("B", addressGoogle.getPremise());
     }
 
@@ -135,13 +135,13 @@ public class GoogleGeoProviderTest extends BaseProviderTest {
                         "83000",
                 Joiner.on(", ").useForNull("No value").join(addressGoogle.getAddressValues()));
 
-        assertEquals("Kyivs'kyi district", addressGoogle.getSublocalityLevel1());
+        assertEquals("Kyivs'kyi district", addressGoogle.getSublocality_level_1());
         assertEquals("Ukraine", addressGoogle.getCountry());
         assertEquals("Chelyuskintsiv Street", addressGoogle.getRoute());
-        assertEquals("Donets'ka city council", addressGoogle.getAdministrativeAreaLevel_3());
-        assertEquals("Donetsk Oblast", addressGoogle.getAdministrativeAreaLevel_1());
-        assertEquals("189", addressGoogle.getStreetNumber());
+        assertEquals("Donets'ka city council", addressGoogle.getAdministrative_area_level_3());
+        assertEquals("Donetsk Oblast", addressGoogle.getAdministrative_area_level_1());
+        assertEquals("189", addressGoogle.getStreet_number());
         assertEquals("Donetsk", addressGoogle.getLocality());
-        assertEquals("83000", addressGoogle.getPostalCode());
+        assertEquals("83000", addressGoogle.getPostal_code());
     }
 }

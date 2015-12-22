@@ -4,7 +4,6 @@ import com.google.api.client.repackaged.com.google.common.base.Joiner;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Set;
 
 /**
  * Created by georgy on 15.12.15.
@@ -16,29 +15,29 @@ public class AddressGoogle {
     private HashMap<String, String> addressSettingsMap;
 
     private String country;
-    private String postalCode;
+    private String postal_code;
     private String countryIsoCode;
     private String city;
     private String subdivision;
     private String subdivisionIsoCode;
-    private String streetNumber;
+    private String street_number;
     private String route;
     private String locality;
-    private String sublocalityLevel1;
-    private String sublocalityLevel2;
-    private String sublocalityLevel3;
-    private String administrativeAreaLevel_3;
-    private String administrativeAreaLevel_2;
-    private String administrativeAreaLevel_1;
-    private String pointOfInterest;
+    private String sublocality_level_1;
+    private String sublocality_level_2;
+    private String sublocality_level_3;
+    private String administrative_area_level_3;
+    private String administrative_area_level_2;
+    private String administrative_area_level_1;
+    private String point_of_interest;
     private String premise;
 
-    public String getStreetNumber() {
-        return streetNumber;
+    public String getStreet_number() {
+        return street_number;
     }
 
-    public void setStreetNumber(String streetNumber) {
-        this.streetNumber = streetNumber;
+    public void setStreet_number(String street_number) {
+        this.street_number = street_number;
     }
 
     public String getRoute() {
@@ -57,52 +56,52 @@ public class AddressGoogle {
         this.locality = locality;
     }
 
-    public String getSublocalityLevel3() {
-        return sublocalityLevel3;
+    public String getSublocality_level_3() {
+        return sublocality_level_3;
     }
 
-    public void setSublocalityLevel3(String sublocalityLevel3) {
-        this.sublocalityLevel3 = sublocalityLevel3;
+    public void setSublocality_level_3(String sublocality_level_3) {
+        this.sublocality_level_3 = sublocality_level_3;
     }
 
-    public String getSublocalityLevel2() {
-        return sublocalityLevel2;
+    public String getSublocality_level_2() {
+        return sublocality_level_2;
     }
 
-    public void setSublocalityLevel2(String sublocalityLevel2) {
-        this.sublocalityLevel2 = sublocalityLevel2;
+    public void setSublocality_level_2(String sublocality_level_2) {
+        this.sublocality_level_2 = sublocality_level_2;
     }
 
-    public String getSublocalityLevel1() {
-        return sublocalityLevel1;
+    public String getSublocality_level_1() {
+        return sublocality_level_1;
     }
 
-    public void setSublocalityLevel1(String sublocalityLevel1) {
-        this.sublocalityLevel1 = sublocalityLevel1;
+    public void setSublocality_level_1(String sublocality_level_1) {
+        this.sublocality_level_1 = sublocality_level_1;
     }
 
-    public String getAdministrativeAreaLevel_3() {
-        return administrativeAreaLevel_3;
+    public String getAdministrative_area_level_3() {
+        return administrative_area_level_3;
     }
 
-    public void setAdministrativeAreaLevel_3(String administrativeAreaLevel_3) {
-        this.administrativeAreaLevel_3 = administrativeAreaLevel_3;
+    public void setAdministrative_area_level_3(String administrative_area_level_3) {
+        this.administrative_area_level_3 = administrative_area_level_3;
     }
 
-    public String getAdministrativeAreaLevel_2() {
-        return administrativeAreaLevel_2;
+    public String getAdministrative_area_level_2() {
+        return administrative_area_level_2;
     }
 
-    public void setAdministrativeAreaLevel_2(String administrativeAreaLevel_2) {
-        this.administrativeAreaLevel_2 = administrativeAreaLevel_2;
+    public void setAdministrative_area_level_2(String administrative_area_level_2) {
+        this.administrative_area_level_2 = administrative_area_level_2;
     }
 
-    public String getAdministrativeAreaLevel_1() {
-        return administrativeAreaLevel_1;
+    public String getAdministrative_area_level_1() {
+        return administrative_area_level_1;
     }
 
-    public void setAdministrativeAreaLevel_1(String administrativeAreaLevel_1) {
-        this.administrativeAreaLevel_1 = administrativeAreaLevel_1;
+    public void setAdministrative_area_level_1(String administrative_area_level_1) {
+        this.administrative_area_level_1 = administrative_area_level_1;
     }
 
     public String getCity() {
@@ -129,12 +128,12 @@ public class AddressGoogle {
         this.countryIsoCode = countryIsoCode;
     }
 
-    public String getPostalCode() {
-        return postalCode;
+    public String getPostal_code() {
+        return postal_code;
     }
 
-    public void setPostalCode(String postalCode) {
-        this.postalCode = postalCode;
+    public void setPostal_code(String postal_code) {
+        this.postal_code = postal_code;
     }
 
     public String getSubdivision() {
@@ -177,12 +176,12 @@ public class AddressGoogle {
         this.addressSettingsMap = addressSettingsMap;
     }
 
-    public String getPointOfInterest() {
-        return pointOfInterest;
+    public String getPoint_of_interest() {
+        return point_of_interest;
     }
 
-    public void setPointOfInterest(String pointOfInterest) {
-        this.pointOfInterest = pointOfInterest;
+    public void setPoint_of_interest(String point_of_interest) {
+        this.point_of_interest = point_of_interest;
     }
 
     public String getPremise() {
