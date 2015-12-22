@@ -129,6 +129,8 @@ public class GoogleAddressProvider implements GeoProviderLatLon {
      * @param dLat double
      * @param dLon double
      * @param lang String
+     *
+     * @return addressGoogle AddressGoogle
      */
     @Override
     public AddressGoogle convertFromLatLong(double dLat, double dLon, String lang) throws GeorgyException {
@@ -210,7 +212,7 @@ public class GoogleAddressProvider implements GeoProviderLatLon {
                                 }
                             }
                         });
-                        
+
                     } else {
                         LOG.debug(response.getString("status"));
                         throw new GeorgyException("Failed to get response " + response);
