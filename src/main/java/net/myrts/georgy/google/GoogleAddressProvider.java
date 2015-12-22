@@ -187,213 +187,31 @@ public class GoogleAddressProvider implements GeoProviderLatLon {
                         addressGoogle.setAddressValues(values);
                         addressGoogle.setAddressSettingsMap(addressSettings);
 
-                        // Київський район
-                        // Colaba
-                        if (addressSettings.containsKey("sublocality_level_1")) {
-                            try {
-                                BeanUtils.setProperty(addressGoogle,
-                                        "sublocality_level_1",
-                                        addressSettings.get("sublocality_level_1"));
-                            } catch (IllegalAccessException e) {
-                                LOG.error("IllegalAccessException ", e);
-                                throw new GeorgyException(e.getMessage(), e);
-                            } catch (InvocationTargetException e) {
-                                LOG.error("IllegalAccessException ", e);
-                                throw new GeorgyException(e.getMessage(), e);
+                        keys.forEach((Object key) -> {
+                            if (addressSettings.containsKey(key)) {
+                                try {
+                                    BeanUtils.setProperty(addressGoogle,
+                                            (String) key,
+                                            addressSettings.get(key));
+                                } catch (IllegalAccessException e) {
+                                    LOG.error("IllegalAccessException ", e);
+                                    try {
+                                        throw new GeorgyException(e.getMessage(), e);
+                                    } catch (GeorgyException e1) {
+                                        e1.printStackTrace();
+                                    }
+                                } catch (InvocationTargetException e) {
+                                    LOG.error("IllegalAccessException ", e);
+                                    try {
+                                        throw new GeorgyException(e.getMessage(), e);
+                                    } catch (GeorgyException e1) {
+                                        e1.printStackTrace();
+                                    }
+                                }
+
                             }
+                        });
 
-                        }
-
-                        // null
-                        // Apollo Bandar
-                        if (addressSettings.containsKey("sublocality_level_2")) {
-                            try {
-                                BeanUtils.setProperty(addressGoogle,
-                                        "sublocality_level_2",
-                                        addressSettings.get("sublocality_level_2"));
-                            } catch (IllegalAccessException e) {
-                                LOG.error("IllegalAccessException ", e);
-                                throw new GeorgyException(e.getMessage(), e);
-                            } catch (InvocationTargetException e) {
-                                LOG.error("IllegalAccessException ", e);
-                                throw new GeorgyException(e.getMessage(), e);
-                            }
-
-                        }
-
-                        // null
-                        // Cusrow Baug Colony
-                        if (addressSettings.containsKey("sublocality_level_3")) {
-                            try {
-                                BeanUtils.setProperty(addressGoogle,
-                                        "sublocality_level_3",
-                                        addressSettings.get("sublocality_level_3"));
-                            } catch (IllegalAccessException e) {
-                                LOG.error("IllegalAccessException ", e);
-                                throw new GeorgyException(e.getMessage(), e);
-                            } catch (InvocationTargetException e) {
-                                LOG.error("IllegalAccessException ", e);
-                                throw new GeorgyException(e.getMessage(), e);
-                            }
-                        }
-
-                        //Украина
-                        // Индия
-                        if (addressSettings.containsKey("country")) {
-                            try {
-                                BeanUtils.setProperty(addressGoogle,
-                                        "country",
-                                        addressSettings.get("country"));
-                            } catch (IllegalAccessException e) {
-                                LOG.error("IllegalAccessException ", e);
-                                throw new GeorgyException(e.getMessage(), e);
-                            } catch (InvocationTargetException e) {
-                                LOG.error("IllegalAccessException ", e);
-                                throw new GeorgyException(e.getMessage(), e);
-                            }
-                        }
-
-                        //вулиця Челюскінців
-                        // null
-                        if (addressSettings.containsKey("route")) {
-                            try {
-                                BeanUtils.setProperty(addressGoogle,
-                                        "route",
-                                        addressSettings.get("route"));
-                            } catch (IllegalAccessException e) {
-                                LOG.error("IllegalAccessException ", e);
-                                throw new GeorgyException(e.getMessage(), e);
-                            } catch (InvocationTargetException e) {
-                                LOG.error("IllegalAccessException ", e);
-                                throw new GeorgyException(e.getMessage(), e);
-                            }
-
-                        }
-
-                        //Донецька область
-                        //Maharashtra
-                        if (addressSettings.containsKey("administrative_area_level_1")) {
-                            try {
-                                BeanUtils.setProperty(addressGoogle,
-                                        "administrative_area_level_1",
-                                        addressSettings.get("administrative_area_level_1"));
-                            } catch (IllegalAccessException e) {
-                                LOG.error("IllegalAccessException ", e);
-                                throw new GeorgyException(e.getMessage(), e);
-                            } catch (InvocationTargetException e) {
-                                LOG.error("IllegalAccessException ", e);
-                                throw new GeorgyException(e.getMessage(), e);
-                            }
-                        }
-
-                        // null
-                        // Mumbai
-                        if (addressSettings.containsKey("administrative_area_level_2")) {
-                            try {
-                                BeanUtils.setProperty(addressGoogle,
-                                        "administrative_area_level_2",
-                                        addressSettings.get("administrative_area_level_2"));
-                            } catch (IllegalAccessException e) {
-                                LOG.error("IllegalAccessException ", e);
-                                throw new GeorgyException(e.getMessage(), e);
-                            } catch (InvocationTargetException e) {
-                                LOG.error("IllegalAccessException ", e);
-                                throw new GeorgyException(e.getMessage(), e);
-                            }
-                        }
-
-                        //Донецька міськрада
-                        // Cusrow Baug Colony
-                        if (addressSettings.containsKey("administrative_area_level_3")) {
-                            try {
-                                BeanUtils.setProperty(addressGoogle,
-                                        "administrative_area_level_3",
-                                        addressSettings.get("administrative_area_level_3"));
-                            } catch (IllegalAccessException e) {
-                                LOG.error("IllegalAccessException ", e);
-                                throw new GeorgyException(e.getMessage(), e);
-                            } catch (InvocationTargetException e) {
-                                LOG.error("IllegalAccessException ", e);
-                                throw new GeorgyException(e.getMessage(), e);
-                            }
-                        }
-
-                        //189
-                        //1218
-                        if (addressSettings.containsKey("street_number")) {
-                            try {
-                                BeanUtils.setProperty(addressGoogle,
-                                        "street_number",
-                                        addressSettings.get("street_number"));
-                            } catch (IllegalAccessException e) {
-                                LOG.error("IllegalAccessException ", e);
-                                throw new GeorgyException(e.getMessage(), e);
-                            } catch (InvocationTargetException e) {
-                                LOG.error("IllegalAccessException ", e);
-                                throw new GeorgyException(e.getMessage(), e);
-                            }
-                        }
-
-                        //Донецьк
-                        //Mumbai
-                        if (addressSettings.containsKey("locality")) {
-                            try {
-                                BeanUtils.setProperty(addressGoogle,
-                                        "locality",
-                                        addressSettings.get("locality"));
-                            } catch (IllegalAccessException e) {
-                                LOG.error("IllegalAccessException ", e);
-                                throw new GeorgyException(e.getMessage(), e);
-                            } catch (InvocationTargetException e) {
-                                LOG.error("IllegalAccessException ", e);
-                                throw new GeorgyException(e.getMessage(), e);
-                            }
-                        }
-
-                        //83000
-                        //400001
-                        if (addressSettings.containsKey("postal_code")) {
-                            try {
-                                BeanUtils.setProperty(addressGoogle,
-                                        "postal_code",
-                                        addressSettings.get("postal_code"));
-                            } catch (IllegalAccessException e) {
-                                LOG.error("IllegalAccessException ", e);
-                                throw new GeorgyException(e.getMessage(), e);
-                            } catch (InvocationTargetException e) {
-                                LOG.error("IllegalAccessException ", e);
-                                throw new GeorgyException(e.getMessage(), e);
-                            }
-                        }
-
-                        //Colaba Depot
-                        if (addressSettings.containsKey("point_of_interest")) {
-                            try {
-                                BeanUtils.setProperty(addressGoogle,
-                                        "point_of_interest",
-                                        addressSettings.get("point_of_interest"));
-                            } catch (IllegalAccessException e) {
-                                LOG.error("IllegalAccessException ", e);
-                                throw new GeorgyException(e.getMessage(), e);
-                            } catch (InvocationTargetException e) {
-                                LOG.error("IllegalAccessException ", e);
-                                throw new GeorgyException(e.getMessage(), e);
-                            }
-                        }
-
-                        if (addressSettings.containsKey("premise")) {
-                            try {
-                                BeanUtils.setProperty(addressGoogle,
-                                        "premise",
-                                        addressSettings.get("premise"));
-                            } catch (IllegalAccessException e) {
-                                LOG.error("IllegalAccessException ", e);
-                                throw new GeorgyException(e.getMessage(), e);
-                            } catch (InvocationTargetException e) {
-                                LOG.error("IllegalAccessException ", e);
-                                throw new GeorgyException(e.getMessage(), e);
-                            }
-                        }
                     } else {
                         LOG.debug(response.getString("status"));
                         throw new GeorgyException("Failed to get response " + response);
