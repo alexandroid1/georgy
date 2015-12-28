@@ -146,7 +146,6 @@ public class GoogleAddressProvider
                 throw new GeorgyException("Failed to get response " +
                         "Longitude should be in -180..180 range");
             } else {
-
                 final String latLongString = String.valueOf(dLat) + "," + String.valueOf(dLon);
                 final String baseUrl = URL;
                 final Map<String, String> params = Maps.newHashMap();
@@ -160,33 +159,23 @@ public class GoogleAddressProvider
                     final JSONObject response = JsonReader.read(url);
 
                     if ("OK".equals(response.getString("status"))) {
-
                         HashMap<String, String> addressSettings = Maps.newHashMap();
-
                         jsonParseToMap(response, addressSettings);
-
                         Set set = addressSettings.keySet();
                         LOG.debug("addressSettings.keySet(); " + set);
-
                         ArrayList<String> keys = new ArrayList<>(set);
                         LOG.debug("keys " + keys);
-
                         Function<String, String> rotateHashMap = Functions.forMap(addressSettings);
                         ArrayList<String> values = new ArrayList<>(Collections2.transform(keys, rotateHashMap));
-
                         keys.forEach((Object key) -> LOG.debug(key + " " + addressSettings.get(key)));
-
                         addressGoogle.setAddressKeys(keys);
                         addressGoogle.setAddressValues(values);
                         addressGoogle.setAddressSettingsMap(addressSettings);
-
                         jsonToGoogleAddress(addressGoogle, addressSettings, keys);
-
                     } else {
                         LOG.debug(response.getString("status"));
                         throw new GeorgyException("Failed to get response " + response);
                     }
-
                 } catch (MalformedURLException e) {
                     LOG.error("MalformedURLException ", e);
                     throw new GeorgyException(e.getMessage(), e);
@@ -197,9 +186,7 @@ public class GoogleAddressProvider
                     LOG.error("IOException ", e);
                     throw new GeorgyException(e.getMessage(), e);
                 }
-
                 return addressGoogle;
-
             }
         }
     }
