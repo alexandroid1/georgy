@@ -8,13 +8,11 @@ import java.net.URL;
 import java.nio.charset.Charset;
 
 /**
- * Created by Oleksandr Pavlov avpavlov108@gmail.com on 15.12.15.
+ * To access to the web services and response in json
+ *
+ * @Created by Oleksandr Pavlov avpavlov108@gmail.com on 15.12.15.
  */
 
-/**
- *To access to the web services and response in json
- * *
- */
 public class JsonReader {
     private static String readAll(final Reader rd) throws IOException {
         final StringBuilder sb = new StringBuilder();

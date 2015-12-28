@@ -3,7 +3,6 @@ package net.myrts.georgy.google;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -21,7 +20,6 @@ import net.myrts.georgy.api.*;
 import net.myrts.georgy.google.stubsConvertFromLatLong.JsonReader;
 import net.myrts.georgy.google.stubsConvertToLatLong.GoogleResponse;
 import net.myrts.georgy.google.stubsConvertToLatLong.Result;
-import org.apache.commons.beanutils.BeanUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -43,7 +41,11 @@ import java.util.Map;
  * XML output. For XML output URL will be
  * "http://maps.googleapis.com/maps/api/geocode/xml";
  */
-public class GoogleAddressProvider implements GeoProviderLatLon {
+public class GoogleAddressProvider
+        extends
+        net.myrts.georgy.google.stubsConvertFromLatLong.JsonToBeanWriter
+        implements
+        GeoProviderLatLon {
 
     /**
      * Here the fullAddress String
@@ -161,19 +163,8 @@ public class GoogleAddressProvider implements GeoProviderLatLon {
 
                         HashMap<String, String> addressSettings = Maps.newHashMap();
 
-                        for (int j = 0; j < response.getJSONArray("results").length(); j++) {
+                        jsonParseToMap(response, addressSettings);
 
-                            final JSONObject location = response.getJSONArray("results").getJSONObject(j);
-                            final JSONArray addressComponents = location.getJSONArray("address_components");
-                            LOG.debug("addressComponents " + addressComponents);
-
-                            for (int i = 0; i < addressComponents.length(); i++) {
-                                String longName = addressComponents.getJSONObject(i).getString("long_name");
-                                JSONArray types = addressComponents.getJSONObject(i).getJSONArray("types");
-                                String type = (String) types.get(0);
-                                addressSettings.putIfAbsent(type, longName);
-                            }
-                        }
                         Set set = addressSettings.keySet();
                         LOG.debug("addressSettings.keySet(); " + set);
 
@@ -189,29 +180,7 @@ public class GoogleAddressProvider implements GeoProviderLatLon {
                         addressGoogle.setAddressValues(values);
                         addressGoogle.setAddressSettingsMap(addressSettings);
 
-                        keys.forEach((Object key) -> {
-                            if (addressSettings.containsKey(key)) {
-                                try {
-                                    BeanUtils.setProperty(addressGoogle,
-                                            (String) key,
-                                            addressSettings.get(key));
-                                } catch (IllegalAccessException e) {
-                                    LOG.error("IllegalAccessException ", e);
-                                    try {
-                                        throw new GeorgyException(e.getMessage(), e);
-                                    } catch (GeorgyException e1) {
-                                        e1.printStackTrace();
-                                    }
-                                } catch (InvocationTargetException e) {
-                                    LOG.error("IllegalAccessException ", e);
-                                    try {
-                                        throw new GeorgyException(e.getMessage(), e);
-                                    } catch (GeorgyException e1) {
-                                        e1.printStackTrace();
-                                    }
-                                }
-                            }
-                        });
+                        jsonToGoogleAddress(addressGoogle, addressSettings, keys);
 
                     } else {
                         LOG.debug(response.getString("status"));
@@ -235,26 +204,7 @@ public class GoogleAddressProvider implements GeoProviderLatLon {
         }
     }
 
-    private static String encodeParams(final Map<String, String> params) {
-        final String paramsUrl = Joiner.on('&').join(
-                Iterables.transform(params.entrySet(), new Function<Map.Entry<String, String>, String>() {
 
-                    @Nullable
-                    @Override
-                    public String apply(@Nullable Map.Entry<String, String> input) {
-                        try {
-                            final StringBuffer buffer = new StringBuffer();
-                            buffer.append(input.getKey());
-                            buffer.append('=');
-                            buffer.append(URLEncoder.encode(input.getValue(), "utf-8"));
-                            return buffer.toString();
-                        } catch (final UnsupportedEncodingException e) {
-                            throw new RuntimeException(e);
-                        }
-                    }
-                }));
 
-        return paramsUrl;
-    }
 
 }
