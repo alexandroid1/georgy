@@ -4,6 +4,7 @@ import com.google.api.client.repackaged.com.google.common.base.Joiner;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by georgy on 15.12.15.
@@ -12,7 +13,7 @@ public class AddressGoogle {
 
     private ArrayList<String> addressKeys;
     private ArrayList<String> addressValues;
-    private HashMap<String, String> addressSettingsMap;
+    private Map<String, String> addressSettingsMap;
 
     private String country;
     private String postal_code;
@@ -168,11 +169,11 @@ public class AddressGoogle {
         this.addressValues = new ArrayList<>(addressValues);
     }
 
-    public HashMap<String, String> getAddressSettingsMap() {
+    public Map<String, String> getAddressSettingsMap() {
         return addressSettingsMap;
     }
 
-    public void setAddressSettingsMap(HashMap<String, String> addressSettingsMap) {
+    public void setAddressSettingsMap(Map<String, String> addressSettingsMap) {
         this.addressSettingsMap = addressSettingsMap;
     }
 

@@ -13,21 +13,21 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.google.api.client.util.Joiner;
 import com.google.common.base.Functions;
 import com.google.common.collect.*;
 import net.myrts.georgy.api.*;
 import net.myrts.georgy.google.stubsConvertFromLatLong.JsonReader;
 import net.myrts.georgy.google.stubsConvertToLatLong.GoogleResponse;
 import net.myrts.georgy.google.stubsConvertToLatLong.Result;
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.google.common.base.Function;
-import com.google.common.collect.Iterables;
-import javax.annotation.Nullable;
 import java.util.Map;
+
+import static net.myrts.georgy.google.stubsConvertFromLatLong.JsonToBeanWriter.encodeParams;
+import static net.myrts.georgy.google.stubsConvertFromLatLong.JsonToBeanWriter.jsonParseToMap;
+import static net.myrts.georgy.google.stubsConvertFromLatLong.JsonToBeanWriter.jsonToGoogleAddress;
 
 /**
  * Created by Oleksandr Pavlov avpavlov108@gmail.com on 15.11.15.
@@ -41,11 +41,7 @@ import java.util.Map;
  * XML output. For XML output URL will be
  * "http://maps.googleapis.com/maps/api/geocode/xml";
  */
-public class GoogleAddressProvider
-        extends
-        net.myrts.georgy.google.stubsConvertFromLatLong.JsonToBeanWriter
-        implements
-        GeoProviderLatLon {
+public class GoogleAddressProvider implements GeoProviderLatLon {
 
     /**
      * Here the fullAddress String
@@ -140,7 +136,7 @@ public class GoogleAddressProvider
             LOG.error("Latitude should be in -90..90 range");
             throw new GeorgyException("Failed to get response " +
                     "Latitude should be in -90..90 range");
-        } else {
+        } {
             if (!(dLon > -180 && dLon <= 180)) {
                 LOG.error("Longitude should be in -180..180 range");
                 throw new GeorgyException("Failed to get response " +
@@ -160,10 +156,10 @@ public class GoogleAddressProvider
 
                     if ("OK".equals(response.getString("status"))) {
 
-                        HashMap<String, String> addressSettings = Maps.newHashMap();
+                        Map<String, String> addressSettings = Maps.newHashMap();
                         jsonParseToMap(response, addressSettings);
 
-                        Set set = addressSettings.keySet();
+                        Set<String> set = addressSettings.keySet();
                         LOG.debug("addressSettings.keySet(); " + set);
 
                         ArrayList<String> keys = new ArrayList<>(set);
@@ -179,7 +175,7 @@ public class GoogleAddressProvider
                         addressGoogle.setAddressSettingsMap(addressSettings);
 
                         jsonToGoogleAddress(addressGoogle, addressSettings, keys);
-                        
+
                     } else {
                         LOG.debug(response.getString("status"));
                         throw new GeorgyException("Failed to get response " + response);

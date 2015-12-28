@@ -29,8 +29,8 @@ public class JsonToBeanWriter {
 
     private static final Logger LOG = LoggerFactory.getLogger(GoogleAddressProvider.class);
 
-    protected void jsonToGoogleAddress(AddressGoogle addressGoogle,
-                                       HashMap<String, String> addressSettings,
+    public static void jsonToGoogleAddress(AddressGoogle addressGoogle,
+                                       Map<String, String> addressSettings,
                                        ArrayList<String> keys)
             throws GeorgyException {
 
@@ -60,10 +60,9 @@ public class JsonToBeanWriter {
         });
     }
 
-    protected static String encodeParams(final Map<String, String> params) {
+    public static String encodeParams(final Map<String, String> params) {
         final String paramsUrl = Joiner.on('&').join(
                 Iterables.transform(params.entrySet(), new Function<Map.Entry<String, String>, String>() {
-
                     @Nullable
                     @Override
                     public String apply(@Nullable Map.Entry<String, String> input) {
@@ -82,9 +81,8 @@ public class JsonToBeanWriter {
         return paramsUrl;
     }
 
-    protected void jsonParseToMap(JSONObject response,
-                                  HashMap<String,
-                                          String> addressSettings) {
+    public static void jsonParseToMap(JSONObject response,
+                                  Map<String, String> addressSettings) {
         for (int j = 0; j < response.getJSONArray("results").length(); j++) {
 
             final JSONObject location = response.getJSONArray("results").getJSONObject(j);
