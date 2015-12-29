@@ -22,6 +22,7 @@ import static org.junit.Assert.fail;
  *         Time: 5:48 PM
  */
 public class MaxMindGeoProviderTest extends BaseProviderTest  {
+
     @Test
     public void shouldParseLocationByIPFromLocalDB() throws UnknownHostException, GeorgyException {
         final MaxMindGeoProvider maxMindGeoProvider = new MaxMindGeoProvider();

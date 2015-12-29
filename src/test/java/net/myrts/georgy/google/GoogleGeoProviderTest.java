@@ -13,6 +13,7 @@ import java.net.UnknownHostException;
  * @author <a href="mailto:avpavlov108@gmail.com">Oleksandr Pavlov</a>
  */
 public class GoogleGeoProviderTest extends BaseProviderTest {
+
     @Test
     public void shouldConvertAddressToLatLongIndia() throws UnknownHostException, GeorgyException {
         final String address = "Apollo Bunder, Mumbai, Maharashtra, India";
@@ -69,6 +70,5 @@ public class GoogleGeoProviderTest extends BaseProviderTest {
 
         assertEquals("Postal code does not match " + addressLocation, "83000", address.getPostalCode());
         assertLocation(48.021238d, 37.810244d, addressLocation);
-
     }
 }
