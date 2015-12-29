@@ -1,7 +1,7 @@
 package net.myrts.georgy.google;
 import com.google.api.client.repackaged.com.google.common.base.Joiner;
 import net.myrts.georgy.BaseProviderTest;
-import net.myrts.georgy.api.AddressGoogle;
+import net.myrts.georgy.google.stubsConvertFromLatLong.AddressGoogle;
 import net.myrts.georgy.api.GeoLocation;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;

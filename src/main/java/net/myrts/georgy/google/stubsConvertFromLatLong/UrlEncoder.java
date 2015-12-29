@@ -12,9 +12,9 @@ import java.util.Map;
 /**
  * to encode params from map to String
  *
- * @Created by Oleksandr Pavlov avpavlov108@gmail.com on 29.12.15.
+ * @author <a href="mailto:avpavlov108@gmail.com">Oleksandr Pavlov</a>
  */
-public class UrlEncode {
+public class UrlEncoder {
 
     /**
      * to encode params from map

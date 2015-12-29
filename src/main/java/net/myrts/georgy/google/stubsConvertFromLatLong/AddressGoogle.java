@@ -1,4 +1,4 @@
-package net.myrts.georgy.api;
+package net.myrts.georgy.google.stubsConvertFromLatLong;
 
 import com.google.api.client.repackaged.com.google.common.base.Joiner;
 
@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by georgy on 15.12.15.
+ * @author <a href="mailto:avpavlov108@gmail.com">Oleksandr Pavlov</a>
  */
 public class AddressGoogle {
 

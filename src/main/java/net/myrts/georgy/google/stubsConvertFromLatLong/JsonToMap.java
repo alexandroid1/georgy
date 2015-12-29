@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * To write JSON to Map
  *
- * @Created by Oleksandr Pavlov avpavlov108@gmail.com on 29.12.15.
+ * @author <a href="mailto:avpavlov108@gmail.com">Oleksandr Pavlov</a>
  */
 public class JsonToMap {
 

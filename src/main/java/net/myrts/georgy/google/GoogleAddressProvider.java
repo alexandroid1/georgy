@@ -7,28 +7,20 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
-import java.util.*;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.google.common.base.Functions;
-import com.google.common.collect.*;
 import net.myrts.georgy.api.*;
-import net.myrts.georgy.google.stubsConvertFromLatLong.JsonReader;
+import net.myrts.georgy.google.stubsConvertFromLatLong.AddressGoogle;
 import net.myrts.georgy.google.stubsConvertToLatLong.GoogleResponse;
 import net.myrts.georgy.google.stubsConvertToLatLong.Result;
-import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.google.common.base.Function;
-import java.util.Map;
 
 
-import static net.myrts.georgy.google.stubsConvertFromLatLong.JsonToBeanWriter.jsonToGoogleAddress;
-import static net.myrts.georgy.google.stubsConvertFromLatLong.JsonToMap.jsonParseToMap;
-import static net.myrts.georgy.google.stubsConvertFromLatLong.UrlEncode.encodeParams;
+import static net.myrts.georgy.google.stubsConvertFromLatLong.JsonToAddressGoogle.getAddressGoogle;
 
 /**
  * @author <a href="mailto:avpavlov108@gmail.com">Oleksandr Pavlov</a>
@@ -132,67 +124,7 @@ public class GoogleAddressProvider implements GeoProviderLatLon {
      */
     @Override
     public AddressGoogle convertFromLatLong(double dLat, double dLon, String lang) throws GeorgyException {
-        if (!(dLat > -90 && dLat <= 90)) {
-            LOG.error("Latitude should be in -90..90 range");
-            throw new GeorgyException("Failed to get response " +
-                    "Latitude should be in -90..90 range");
-        } {
-            if (!(dLon > -180 && dLon <= 180)) {
-                LOG.error("Longitude should be in -180..180 range");
-                throw new GeorgyException("Failed to get response " +
-                        "Longitude should be in -180..180 range");
-            } else {
-                final String latLongString = String.valueOf(dLat) + "," + String.valueOf(dLon);
-                final String baseUrl = URL;
-                final Map<String, String> params = Maps.newHashMap();
-                params.put("language", lang);
-                params.put("sensor", "false");
-                params.put("latlng", latLongString);
-                final String url = baseUrl + '?' + encodeParams(params);
-                LOG.debug("url ", url);
-                AddressGoogle addressGoogle = new AddressGoogle();
-                try {
-                    final JSONObject response = JsonReader.read(url);
-
-                    if ("OK".equals(response.getString("status"))) {
-
-                        Map<String, String> addressSettings = Maps.newHashMap();
-                        jsonParseToMap(response, addressSettings);
-
-                        Set<String> set = addressSettings.keySet();
-                        LOG.debug("addressSettings.keySet(); " + set);
-
-                        ArrayList<String> keys = new ArrayList<>(set);
-                        LOG.debug("keys " + keys);
-
-                        Function<String, String> rotateHashMap = Functions.forMap(addressSettings);
-                        ArrayList<String> values = new ArrayList<>(Collections2.transform(keys, rotateHashMap));
-
-                        keys.forEach((Object key) -> LOG.debug(key + " " + addressSettings.get(key)));
-
-                        addressGoogle.setAddressKeys(keys);
-                        addressGoogle.setAddressValues(values);
-                        addressGoogle.setAddressSettingsMap(addressSettings);
-
-                        jsonToGoogleAddress(addressGoogle, addressSettings, keys);
-
-                    } else {
-                        LOG.debug(response.getString("status"));
-                        throw new GeorgyException("Failed to get response " + response);
-                    }
-                } catch (MalformedURLException e) {
-                    LOG.error("MalformedURLException ", e);
-                    throw new GeorgyException(e.getMessage(), e);
-                } catch (UnsupportedEncodingException e) {
-                    LOG.error("UnsupportedEncodingException ", e);
-                    throw new GeorgyException(e.getMessage(), e);
-                } catch (IOException e) {
-                    LOG.error("IOException ", e);
-                    throw new GeorgyException(e.getMessage(), e);
-                }
-                return addressGoogle;
-            }
-        }
+        return getAddressGoogle(dLat, dLon, lang, URL);
     }
 
 }

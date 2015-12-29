@@ -1,5 +1,7 @@
 package net.myrts.georgy.api;
 
+import net.myrts.georgy.google.stubsConvertFromLatLong.AddressGoogle;
+
 /**
  * Geo provider Lat Lon base interface.
  *

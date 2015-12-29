@@ -10,7 +10,7 @@ import java.nio.charset.Charset;
 /**
  * To access to the web services and response in json
  *
- * @Created by Oleksandr Pavlov avpavlov108@gmail.com on 15.12.15.
+ * @author <a href="mailto:avpavlov108@gmail.com">Oleksandr Pavlov</a>
  */
 
 public class JsonReader {
