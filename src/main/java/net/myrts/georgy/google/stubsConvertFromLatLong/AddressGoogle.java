@@ -16,10 +16,8 @@ public class AddressGoogle {
 
     private String country;
     private String postal_code;
-    private String countryIsoCode;
     private String city;
     private String subdivision;
-    private String subdivisionIsoCode;
     private String street_number;
     private String route;
     private String locality;
@@ -34,11 +32,8 @@ public class AddressGoogle {
 
     private String country_short;
     private String postal_code_short;
-    private String countryIsoCode_short;
-
     private String city_short;
     private String subdivision_short;
-    private String subdivisionIsoCode_short;
     private String street_number_short;
     private String route_short;
     private String locality_short;
@@ -139,14 +134,6 @@ public class AddressGoogle {
         this.country = country;
     }
 
-    public String getCountryIsoCode() {
-        return countryIsoCode;
-    }
-
-    public void setCountryIsoCode(String countryIsoCode) {
-        this.countryIsoCode = countryIsoCode;
-    }
-
     public String getPostal_code() {
         return postal_code;
     }
@@ -161,14 +148,6 @@ public class AddressGoogle {
 
     public void setSubdivision(String subdivision) {
         this.subdivision = subdivision;
-    }
-
-    public String getSubdivisionIsoCode() {
-        return subdivisionIsoCode;
-    }
-
-    public void setSubdivisionIsoCode(String subdivisionIsoCode) {
-        this.subdivisionIsoCode = subdivisionIsoCode;
     }
 
     public ArrayList<String> getAddressKeys() {
@@ -227,13 +206,6 @@ public class AddressGoogle {
         this.postal_code_short = postal_code_short;
     }
 
-    public String getCountryIsoCode_short() {
-        return countryIsoCode_short;
-    }
-
-    public void setCountryIsoCode_short(String countryIsoCode_short) {
-        this.countryIsoCode_short = countryIsoCode_short;
-    }
 
     public String getCity_short() {
         return city_short;
@@ -249,14 +221,6 @@ public class AddressGoogle {
 
     public void setSubdivision_short(String subdivision_short) {
         this.subdivision_short = subdivision_short;
-    }
-
-    public String getSubdivisionIsoCode_short() {
-        return subdivisionIsoCode_short;
-    }
-
-    public void setSubdivisionIsoCode_short(String subdivisionIsoCode_short) {
-        this.subdivisionIsoCode_short = subdivisionIsoCode_short;
     }
 
     public String getStreet_number_short() {
@@ -397,6 +361,20 @@ public class AddressGoogle {
                 Joiner.on(", ").useForNull("No value").join(addressGoogle.getAddressValues()));*/
 
 
+/*        assertEquals("Apollo Bandar", addressGoogle.getSublocality_level_2());
+        assertEquals("Colaba", addressGoogle.getSublocality_level_1());
+        assertEquals("India", addressGoogle.getCountry());
+        assertEquals("Shahid Bhagat Singh Marg", addressGoogle.getRoute());
+        assertEquals("Mumbai", addressGoogle.getAdministrative_area_level_2());
+        assertEquals("Cusrow Baug Colony", addressGoogle.getSublocality_level_3());
+        assertEquals("Maharashtra", addressGoogle.getAdministrative_area_level_1());
+        assertEquals("Mumbai", addressGoogle.getLocality());
+        assertEquals("1218", addressGoogle.getStreet_number());
+        assertEquals("400001", addressGoogle.getPostal_code());
+        assertEquals("Colaba Depot", addressGoogle.getPoint_of_interest());
+        assertEquals("B", addressGoogle.getPremise());*/
+
+
     /*-----------------------------------------*/
 
            /* final String addressCompare = "sublocality_level_1 -> Kyivs'kyi district " +
@@ -433,5 +411,19 @@ public class AddressGoogle {
                         "Donetsk, " +
                         "83000",
                 Joiner.on(", ").useForNull("No value").join(addressGoogle.getAddressValues()));*/
+
+           /* final AddressGoogle addressGoogle = new GoogleAddressProvider()
+                .convertFromLatLong(dLat, dLon, "en");
+
+
+
+        assertEquals("Kyivs'kyi district", addressGoogle.getSublocality_level_1());
+        assertEquals("Ukraine", addressGoogle.getCountry());
+        assertEquals("Chelyuskintsiv Street", addressGoogle.getRoute());
+        assertEquals("Donets'ka city council", addressGoogle.getAdministrative_area_level_3());
+        assertEquals("Donetsk Oblast", addressGoogle.getAdministrative_area_level_1());
+        assertEquals("189", addressGoogle.getStreet_number());
+        assertEquals("Donetsk", addressGoogle.getLocality());
+        assertEquals("83000", addressGoogle.getPostal_code());*/
 
 }

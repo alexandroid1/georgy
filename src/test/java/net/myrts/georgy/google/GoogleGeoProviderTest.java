@@ -1,9 +1,7 @@
 package net.myrts.georgy.google;
-import com.google.api.client.repackaged.com.google.common.base.Joiner;
 import net.myrts.georgy.BaseProviderTest;
 import net.myrts.georgy.api.Address;
 import net.myrts.georgy.api.AddressLocation;
-import net.myrts.georgy.google.stubsConvertFromLatLong.AddressGoogle;
 import net.myrts.georgy.api.GeoLocation;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
@@ -27,6 +25,7 @@ public class GoogleGeoProviderTest extends BaseProviderTest {
 
     @Test
     public void shouldConvertLatLongToAddressIndia() throws UnknownHostException, GeorgyException {
+
         final double dLat =18.92038860d;
         final double dLon =72.83013059d;
 
@@ -35,48 +34,41 @@ public class GoogleGeoProviderTest extends BaseProviderTest {
         final AddressLocation addressLocation = googleAddressProvider.convertFromLatLong(dLat, dLon, "en");
         final Address address = addressLocation.getAddress();
 
-
+        assertEquals("Country iso code does not match " + addressLocation, "IN", address.getCountryIsoCode());
         assertEquals("Country does not match " + addressLocation, "India", address.getCountry());
+
+        assertEquals("State iso code does not match " + addressLocation, "MH", address.getSubdivisionIsoCode());
         assertEquals("State name does not match " + addressLocation, "Maharashtra", address.getSubdivision());
+
         assertEquals("City does not match " + addressLocation, "Mumbai", address.getCity());
+
         assertEquals("Postal code does not match " + addressLocation, "400001", address.getPostalCode());
         assertLocation(18.92038860d, 72.83013059d, addressLocation);
 
 
-/*        assertEquals("Apollo Bandar", addressGoogle.getSublocality_level_2());
-        assertEquals("Colaba", addressGoogle.getSublocality_level_1());
-        assertEquals("India", addressGoogle.getCountry());
-        assertEquals("Shahid Bhagat Singh Marg", addressGoogle.getRoute());
-        assertEquals("Mumbai", addressGoogle.getAdministrative_area_level_2());
-        assertEquals("Cusrow Baug Colony", addressGoogle.getSublocality_level_3());
-        assertEquals("Maharashtra", addressGoogle.getAdministrative_area_level_1());
-        assertEquals("Mumbai", addressGoogle.getLocality());
-        assertEquals("1218", addressGoogle.getStreet_number());
-        assertEquals("400001", addressGoogle.getPostal_code());
-        assertEquals("Colaba Depot", addressGoogle.getPoint_of_interest());
-        assertEquals("B", addressGoogle.getPremise());*/
     }
 
     @Test
     public void shouldConvertLatLongToAddressUkraine() throws UnknownHostException, GeorgyException {
-        //Donbass Arena Donetsk city
-        //  http://maps.googleapis.com/maps/api/geocode/json?latlng=48.021238, 37.810244&sensor=false
+
         final double dLat =48.021238d;
         final double dLon =37.810244d;
 
+        //  http://maps.googleapis.com/maps/api/geocode/json?latlng=48.021238, 37.810244&sensor=false
+        final GoogleAddressProvider googleAddressProvider = new GoogleAddressProvider();
+        final AddressLocation addressLocation = googleAddressProvider.convertFromLatLong(dLat, dLon, "en");
+        final Address address = addressLocation.getAddress();
 
-        final AddressGoogle addressGoogle = new GoogleAddressProvider()
-                .convertFromLatLong(dLat, dLon, "en");
+        assertEquals("Country iso code does not match " + addressLocation, "UA", address.getCountryIsoCode());
+        assertEquals("Country does not match " + addressLocation, "Ukraine", address.getCountry());
 
+        assertEquals("State iso code does not match " + addressLocation, "Donetsk Oblast", address.getSubdivisionIsoCode());
+        assertEquals("State name does not match " + addressLocation, "Donetsk Oblast", address.getSubdivision());
 
+        assertEquals("City does not match " + addressLocation, "Donetsk", address.getCity());
 
-        assertEquals("Kyivs'kyi district", addressGoogle.getSublocality_level_1());
-        assertEquals("Ukraine", addressGoogle.getCountry());
-        assertEquals("Chelyuskintsiv Street", addressGoogle.getRoute());
-        assertEquals("Donets'ka city council", addressGoogle.getAdministrative_area_level_3());
-        assertEquals("Donetsk Oblast", addressGoogle.getAdministrative_area_level_1());
-        assertEquals("189", addressGoogle.getStreet_number());
-        assertEquals("Donetsk", addressGoogle.getLocality());
-        assertEquals("83000", addressGoogle.getPostal_code());
+        assertEquals("Postal code does not match " + addressLocation, "83000", address.getPostalCode());
+        assertLocation(48.021238d, 37.810244d, addressLocation);
+
     }
 }

@@ -130,8 +130,8 @@ public class GoogleAddressProvider implements GeoProviderLatLon {
         address.setCountry(addressGoogle.getCountry());
         address.setSubdivision(addressGoogle.getAdministrative_area_level_1());
         address.setCity(addressGoogle.getLocality());
-        address.setCountryIsoCode("No Country Iso code");
-        address.setSubdivisionIsoCode("No Subdivision Iso code");
+        address.setCountryIsoCode(addressGoogle.getCountry_short());
+        address.setSubdivisionIsoCode(addressGoogle.getAdministrative_area_level_1_short());
         address.setPostalCode(addressGoogle.getPostal_code());
         addressLocation.setAddress(address);
         addressLocation.setLocation(new GeoLocation(dLat, dLon));
