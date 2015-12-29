@@ -8,7 +8,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Created by georgy on 29.12.15.
+ * To receive lat,lon from JSON
+ *
+ * @author <a href="mailto:avpavlov108@gmail.com">Oleksandr Pavlov</a>
  */
 public class JsonToLatLon {
 
