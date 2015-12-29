@@ -65,7 +65,9 @@ public class JsonToAddressGoogle {
                         Function<String, String> rotateHashMap = Functions.forMap(addressSettings);
                         ArrayList<String> values = new ArrayList<>(Collections2.transform(keys, rotateHashMap));
 
-                        keys.forEach((Object key) -> LOG.debug(key + " " + addressSettings.get(key)));
+                        for(String key : keys){
+                            LOG.debug(key + " " + addressSettings.get(key));
+                        }
 
                         addressGoogle.setAddressKeys(keys);
                         addressGoogle.setAddressValues(values);
