@@ -15,12 +15,12 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import net.myrts.georgy.api.*;
 import net.myrts.georgy.google.stubsConvertFromLatLong.AddressGoogle;
 import net.myrts.georgy.google.stubsConvertToLatLong.GoogleResponse;
-import net.myrts.georgy.google.stubsConvertToLatLong.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
 import static net.myrts.georgy.google.stubsConvertFromLatLong.JsonToAddressGoogle.getAddressGoogle;
+import static net.myrts.georgy.google.stubsConvertFromLatLong.JsonToLatLon.getGeoLocation;
 
 /**
  * @author <a href="mailto:avpavlov108@gmail.com">Oleksandr Pavlov</a>
@@ -58,11 +58,9 @@ public class GoogleAddressProvider implements GeoProviderLatLon {
 
             // Open the Connection
             URLConnection conn = url.openConnection();
-
             GoogleResponse response;
 
             try (InputStream in = conn.getInputStream()) {
-
                 ObjectMapper mapper = new ObjectMapper(); // can reuse, share globally
 
                 // IMPORTANT
@@ -70,28 +68,9 @@ public class GoogleAddressProvider implements GeoProviderLatLon {
                 mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
                 response = mapper.readValue(in, GoogleResponse.class);
-
-                if ("OK".equals(response.getStatus())) {
-                    if (response.getResults().isEmpty()) {
-                        throw new GeorgyException("Response result is empty " + response);
-                    }
-                    for (Result result : response.getResults()) {
-                        GeoLocation geoLocation = new GeoLocation(
-                                result.getGeometry().getLocation().getLat(),
-                                result.getGeometry().getLocation().getLng()
-                        );
-
-                        LOG.debug("Latitude ", result.getGeometry().getLocation().getLat());
-                        LOG.debug("Longitude ", result.getGeometry().getLocation().getLng());
-                        LOG.debug("Location type ", result.getGeometry().getLocationType());
-                        return geoLocation;
-                    }
-                } else {
-                    LOG.debug(response.getStatus());
-                    throw new GeorgyException("Failed to get response " + response);
-                }
+                GeoLocation geoLocation = getGeoLocation(response);
+                if (geoLocation != null) return geoLocation;
             }
-
         } catch (MalformedURLException e) {
             LOG.error("MalformedURLException ", e);
             throw new GeorgyException(e.getMessage(), e);
@@ -111,6 +90,8 @@ public class GoogleAddressProvider implements GeoProviderLatLon {
 
         return null;
     }
+
+
 
     /**
      * convertFromLatLong
