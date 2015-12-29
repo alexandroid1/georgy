@@ -34,8 +34,7 @@ public class JsonToAddressGoogle {
             LOG.error("Latitude should be in -90..90 range");
             throw new GeorgyException("Failed to get response " +
                     "Latitude should be in -90..90 range");
-        }
-        {
+        } else {
             if (!(dLon > -180 && dLon <= 180)) {
                 LOG.error("Longitude should be in -180..180 range");
                 throw new GeorgyException("Failed to get response " +
