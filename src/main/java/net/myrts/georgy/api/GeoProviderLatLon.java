@@ -10,5 +10,5 @@ import net.myrts.georgy.google.stubsConvertFromLatLong.AddressGoogle;
 public interface GeoProviderLatLon {
     GeoLocation convertToLatLong(String fullAddress) throws GeorgyException;
 
-    AddressGoogle convertFromLatLong(double dLat, double dLon, String lang) throws GeorgyException;
+    AddressLocation convertFromLatLong(double dLat, double dLon, String lang) throws GeorgyException;
 }

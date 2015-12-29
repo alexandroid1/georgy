@@ -1,6 +1,8 @@
 package net.myrts.georgy.google;
 import com.google.api.client.repackaged.com.google.common.base.Joiner;
 import net.myrts.georgy.BaseProviderTest;
+import net.myrts.georgy.api.Address;
+import net.myrts.georgy.api.AddressLocation;
 import net.myrts.georgy.google.stubsConvertFromLatLong.AddressGoogle;
 import net.myrts.georgy.api.GeoLocation;
 import org.junit.Test;
@@ -28,56 +30,20 @@ public class GoogleGeoProviderTest extends BaseProviderTest {
         final double dLat =18.92038860d;
         final double dLon =72.83013059d;
 
-        final String addressCompare = "sublocality_level_2 -> Apollo Bandar " +
-                "| sublocality_level_1 -> Colaba " +
-                "| country -> India " +
-                "| route -> Shahid Bhagat Singh Marg " +
-                "| administrative_area_level_2 -> Mumbai " +
-                "| premise -> B " +
-                "| sublocality_level_3 -> Cusrow Baug Colony " +
-                "| administrative_area_level_1 -> Maharashtra " +
-                "| locality -> Mumbai " +
-                "| street_number -> 1218 " +
-                "| point_of_interest -> Colaba Depot " +
-                "| postal_code -> 400001";
-
         // http://maps.googleapis.com/maps/api/geocode/json?latlng=18.92038860,72.83013059999999&sensor=false
-        final AddressGoogle addressGoogle = new GoogleAddressProvider()
-                .convertFromLatLong(dLat, dLon, "en");
+        final GoogleAddressProvider googleAddressProvider = new GoogleAddressProvider();
+        final AddressLocation addressLocation = googleAddressProvider.convertFromLatLong(dLat, dLon, "en");
+        final Address address = addressLocation.getAddress();
 
-        assertEquals(addressCompare, addressGoogle.toString());
 
-        assertEquals(addressCompare,
-                Joiner.on(" | ").withKeyValueSeparator(" -> ").useForNull("No such HashMap Element").
-                join(addressGoogle.getAddressSettingsMap()));
+        assertEquals("Country does not match " + addressLocation, "India", address.getCountry());
+        assertEquals("State name does not match " + addressLocation, "Maharashtra", address.getSubdivision());
+        assertEquals("City does not match " + addressLocation, "Mumbai", address.getCity());
+        assertEquals("Postal code does not match " + addressLocation, "400001", address.getPostalCode());
+        assertLocation(18.92038860d, 72.83013059d, addressLocation);
 
-        assertEquals("sublocality_level_2, " +
-                "sublocality_level_1, " +
-                "country, route, " +
-                "administrative_area_level_2, " +
-                "premise, sublocality_level_3, " +
-                "administrative_area_level_1, " +
-                "locality, street_number, " +
-                "point_of_interest, " +
-                "postal_code",
-                Joiner.on(", ").useForNull("No key").join(addressGoogle.getAddressKeys()));
 
-        assertEquals("Apollo Bandar, " +
-                        "Colaba, " +
-                        "India, " +
-                        "Shahid Bhagat Singh Marg, " +
-                        "Mumbai, " +
-                        "B, " +
-                        "Cusrow Baug Colony, " +
-                        "Maharashtra, " +
-                        "Mumbai, " +
-                        "1218, " +
-                        "Colaba " +
-                        "Depot, " +
-                        "400001",
-                Joiner.on(", ").useForNull("No value").join(addressGoogle.getAddressValues()));
-
-        assertEquals("Apollo Bandar", addressGoogle.getSublocality_level_2());
+/*        assertEquals("Apollo Bandar", addressGoogle.getSublocality_level_2());
         assertEquals("Colaba", addressGoogle.getSublocality_level_1());
         assertEquals("India", addressGoogle.getCountry());
         assertEquals("Shahid Bhagat Singh Marg", addressGoogle.getRoute());
@@ -88,7 +54,7 @@ public class GoogleGeoProviderTest extends BaseProviderTest {
         assertEquals("1218", addressGoogle.getStreet_number());
         assertEquals("400001", addressGoogle.getPostal_code());
         assertEquals("Colaba Depot", addressGoogle.getPoint_of_interest());
-        assertEquals("B", addressGoogle.getPremise());
+        assertEquals("B", addressGoogle.getPremise());*/
     }
 
     @Test
@@ -97,43 +63,12 @@ public class GoogleGeoProviderTest extends BaseProviderTest {
         //  http://maps.googleapis.com/maps/api/geocode/json?latlng=48.021238, 37.810244&sensor=false
         final double dLat =48.021238d;
         final double dLon =37.810244d;
-        final String addressCompare = "sublocality_level_1 -> Kyivs'kyi district " +
-                "| country -> Ukraine " +
-                "| route -> Chelyuskintsiv Street " +
-                "| administrative_area_level_3 -> Donets'ka city council " +
-                "| administrative_area_level_1 -> Donetsk Oblast " +
-                "| street_number -> 189 " +
-                "| locality -> Donetsk " +
-                "| postal_code -> 83000";
+
 
         final AddressGoogle addressGoogle = new GoogleAddressProvider()
                 .convertFromLatLong(dLat, dLon, "en");
 
-        assertEquals(addressCompare, addressGoogle.toString());
 
-        assertEquals(addressCompare,
-                Joiner.on(" | ").withKeyValueSeparator(" -> ").useForNull("No such HashMap Element").
-                        join(addressGoogle.getAddressSettingsMap()));
-
-        assertEquals("sublocality_level_1, " +
-                        "country, " +
-                        "route, " +
-                        "administrative_area_level_3, " +
-                        "administrative_area_level_1, " +
-                        "street_number, " +
-                        "locality, " +
-                        "postal_code",
-                Joiner.on(", ").useForNull("No key").join(addressGoogle.getAddressKeys()));
-
-        assertEquals("Kyivs'kyi district, " +
-                        "Ukraine, " +
-                        "Chelyuskintsiv Street, " +
-                        "Donets'ka city council, " +
-                        "Donetsk Oblast, " +
-                        "189, " +
-                        "Donetsk, " +
-                        "83000",
-                Joiner.on(", ").useForNull("No value").join(addressGoogle.getAddressValues()));
 
         assertEquals("Kyivs'kyi district", addressGoogle.getSublocality_level_1());
         assertEquals("Ukraine", addressGoogle.getCountry());

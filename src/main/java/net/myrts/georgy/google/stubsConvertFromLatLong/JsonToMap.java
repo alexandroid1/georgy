@@ -33,9 +33,11 @@ public class JsonToMap {
 
             for (int i = 0; i < addressComponents.length(); i++) {
                 String longName = addressComponents.getJSONObject(i).getString("long_name");
+                String shortName = addressComponents.getJSONObject(i).getString("short_name");
                 JSONArray types = addressComponents.getJSONObject(i).getJSONArray("types");
                 String type = (String) types.get(0);
                 addressSettings.putIfAbsent(type, longName);
+                addressSettings.putIfAbsent(type+"_short", shortName);
             }
         }
     }

@@ -30,30 +30,20 @@ public class JsonToBean {
                                        ArrayList<String> keys)
             throws GeorgyException {
 
-        keys.forEach((Object key) -> {
+        for(String key : keys){
             if (addressSettings.containsKey(key)) {
                 try {
-                    BeanUtils.setProperty(addressGoogle,
-                            (String) key,
-                            addressSettings.get(key));
+                    BeanUtils.setProperty(addressGoogle, key, addressSettings.get(key));
                 } catch (IllegalAccessException e) {
                     LOG.debug("IllegalAccessException ", e);
-                    try {
-                        throw new GeorgyException("IllegalAccessException ", e);
-                    } catch (GeorgyException e1) {
-                        e1.printStackTrace();
-                    }
-
+                    throw new GeorgyException("IllegalAccessException ", e);
                 } catch (InvocationTargetException e) {
                     LOG.debug("InvocationTargetException ", e);
-                    try {
-                        throw new GeorgyException("InvocationTargetException ", e);
-                    } catch (GeorgyException e1) {
-                        e1.printStackTrace();
-                    }
+                    throw new GeorgyException("InvocationTargetException ", e);
                 }
             }
-        });
+        }
+
     }
 
 }

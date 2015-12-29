@@ -24,12 +24,11 @@ import static net.myrts.georgy.google.stubsConvertFromLatLong.JsonToAddressGoogl
 
 /**
  * @author <a href="mailto:avpavlov108@gmail.com">Oleksandr Pavlov</a>
- *
- *  * Geocode request URL. Here see we are passing "json" it means we will get
- * the output in JSON format. You can also pass "xml" instead of "json" for
- * XML output. For XML output URL will be
- * "http://maps.googleapis.com/maps/api/geocode/xml";
- *
+ *         <p>
+ *         * Geocode request URL. Here see we are passing "json" it means we will get
+ *         the output in JSON format. You can also pass "xml" instead of "json" for
+ *         XML output. For XML output URL will be
+ *         "http://maps.googleapis.com/maps/api/geocode/xml";
  */
 
 
@@ -118,13 +117,27 @@ public class GoogleAddressProvider implements GeoProviderLatLon {
      *
      * @param dLat double
      * @param dLon double
-     * @param lang String
-     *
+     * @param locale String
      * @return addressGoogle AddressGoogle
      */
     @Override
-    public AddressGoogle convertFromLatLong(double dLat, double dLon, String lang) throws GeorgyException {
-        return getAddressGoogle(dLat, dLon, lang, URL);
+    public AddressLocation convertFromLatLong(double dLat, double dLon, String locale) throws GeorgyException {
+        final AddressGoogle addressGoogle = getAddressGoogle(dLat, dLon, locale, URL);
+
+        final AddressLocation addressLocation = new AddressLocation();
+        final Address address = new Address();
+
+        address.setCountry(addressGoogle.getCountry());
+        address.setSubdivision(addressGoogle.getAdministrative_area_level_1());
+        address.setCity(addressGoogle.getLocality());
+        address.setCountryIsoCode("No Country Iso code");
+        address.setSubdivisionIsoCode("No Subdivision Iso code");
+        address.setPostalCode(addressGoogle.getPostal_code());
+        addressLocation.setAddress(address);
+        addressLocation.setLocation(new GeoLocation(dLat, dLon));
+
+        return addressLocation;
+
     }
 
 }
