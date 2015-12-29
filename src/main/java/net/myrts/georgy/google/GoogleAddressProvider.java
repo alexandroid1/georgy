@@ -18,7 +18,6 @@ import net.myrts.georgy.google.stubsConvertToLatLong.GoogleResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 import static net.myrts.georgy.google.stubsConvertFromLatLong.JsonToAddressGoogle.getAddressGoogle;
 import static net.myrts.georgy.google.stubsConvertFromLatLong.JsonToLatLon.getGeoLocation;
 
@@ -31,7 +30,6 @@ import static net.myrts.georgy.google.stubsConvertFromLatLong.JsonToLatLon.getGe
  *         "http://maps.googleapis.com/maps/api/geocode/xml";
  */
 
-
 public class GoogleAddressProvider implements GeoProviderLatLon {
 
     /**
@@ -42,8 +40,7 @@ public class GoogleAddressProvider implements GeoProviderLatLon {
     private static final Logger LOG = LoggerFactory.getLogger(GoogleAddressProvider.class);
 
     /**
-     * Create an java.net.URL object by passing the request URL in
-     * constructor.
+     * convert To Lat,Long
      *
      * @param fullAddress String
      * @return geoLocation GeoLocation
@@ -92,14 +89,13 @@ public class GoogleAddressProvider implements GeoProviderLatLon {
     }
 
 
-
     /**
-     * convertFromLatLong
+     * convert From Lat,Long
      *
      * @param dLat double
      * @param dLon double
      * @param locale String
-     * @return addressGoogle AddressGoogle
+     * @return addressLocation AddressLocation
      */
     @Override
     public AddressLocation convertFromLatLong(double dLat, double dLon, String locale) throws GeorgyException {
