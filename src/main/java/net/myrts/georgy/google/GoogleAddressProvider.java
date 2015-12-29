@@ -25,22 +25,22 @@ import org.slf4j.LoggerFactory;
 import com.google.common.base.Function;
 import java.util.Map;
 
-import static net.myrts.georgy.google.stubsConvertFromLatLong.JsonToBeanWriter.encodeParams;
-import static net.myrts.georgy.google.stubsConvertFromLatLong.JsonToBeanWriter.jsonParseToMap;
+
 import static net.myrts.georgy.google.stubsConvertFromLatLong.JsonToBeanWriter.jsonToGoogleAddress;
+import static net.myrts.georgy.google.stubsConvertFromLatLong.JsonToMap.jsonParseToMap;
+import static net.myrts.georgy.google.stubsConvertFromLatLong.UrlEncode.encodeParams;
 
 /**
- * Created by Oleksandr Pavlov avpavlov108@gmail.com on 15.11.15.
- *
  * @author <a href="mailto:avpavlov108@gmail.com">Oleksandr Pavlov</a>
- */
-
-/**
- * Geocode request URL. Here see we are passing "json" it means we will get
+ *
+ *  * Geocode request URL. Here see we are passing "json" it means we will get
  * the output in JSON format. You can also pass "xml" instead of "json" for
  * XML output. For XML output URL will be
  * "http://maps.googleapis.com/maps/api/geocode/xml";
+ *
  */
+
+
 public class GoogleAddressProvider implements GeoProviderLatLon {
 
     /**

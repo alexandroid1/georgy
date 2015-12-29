@@ -14,6 +14,13 @@ import java.nio.charset.Charset;
  */
 
 public class JsonReader {
+
+    /**
+     * to build string
+     *
+     * @param rd Reader
+     * @return sb.toString() String
+     */
     private static String readAll(final Reader rd) throws IOException {
         final StringBuilder sb = new StringBuilder();
         int cp;
@@ -23,6 +30,12 @@ public class JsonReader {
         return sb.toString();
     }
 
+    /**
+     * to read JSONObject by url
+     *
+     * @param url String
+     * @return json JSONObject
+     */
     public static JSONObject read(final String url) throws IOException, JSONException {
         final InputStream is = new URL(url).openStream();
         try {

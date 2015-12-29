@@ -27,8 +27,15 @@ import java.util.Map;
  */
 public class JsonToBeanWriter {
 
-    private static final Logger LOG = LoggerFactory.getLogger(GoogleAddressProvider.class);
+    private static final Logger LOG = LoggerFactory.getLogger(JsonToBeanWriter.class);
 
+    /**
+     * to write json to GoogleAddress
+     *
+     * @param addressGoogle AddressGoogle
+     * @param addressSettings Map<String, String>
+     * @param keys ArrayList<String>
+     */
     public static void jsonToGoogleAddress(AddressGoogle addressGoogle,
                                        Map<String, String> addressSettings,
                                        ArrayList<String> keys)
@@ -60,41 +67,4 @@ public class JsonToBeanWriter {
         });
     }
 
-    public static String encodeParams(final Map<String, String> params) {
-        final String paramsUrl = Joiner.on('&').join(
-                Iterables.transform(params.entrySet(), new Function<Map.Entry<String, String>, String>() {
-                    @Nullable
-                    @Override
-                    public String apply(@Nullable Map.Entry<String, String> input) {
-                        try {
-                            final StringBuffer buffer = new StringBuffer();
-                            buffer.append(input.getKey());
-                            buffer.append('=');
-                            buffer.append(URLEncoder.encode(input.getValue(), "utf-8"));
-                            return buffer.toString();
-                        } catch (final UnsupportedEncodingException e) {
-                            throw new RuntimeException(e);
-                        }
-                    }
-                }));
-
-        return paramsUrl;
-    }
-
-    public static void jsonParseToMap(JSONObject response,
-                                  Map<String, String> addressSettings) {
-        for (int j = 0; j < response.getJSONArray("results").length(); j++) {
-
-            final JSONObject location = response.getJSONArray("results").getJSONObject(j);
-            final JSONArray addressComponents = location.getJSONArray("address_components");
-            LOG.debug("addressComponents " + addressComponents);
-
-            for (int i = 0; i < addressComponents.length(); i++) {
-                String longName = addressComponents.getJSONObject(i).getString("long_name");
-                JSONArray types = addressComponents.getJSONObject(i).getJSONArray("types");
-                String type = (String) types.get(0);
-                addressSettings.putIfAbsent(type, longName);
-            }
-        }
-    }
 }
