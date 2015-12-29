@@ -49,8 +49,7 @@ public class GoogleAddressProvider implements GeoProviderLatLon {
     public GeoLocation convertToLatLong(String fullAddress) throws GeorgyException {
 
         try {
-            URL url = new URL(URL + "?address="
-                    + URLEncoder.encode(fullAddress, "UTF-8") + "&sensor=false");
+            URL url = new URL(URL + "?address=" + URLEncoder.encode(fullAddress, "UTF-8") + "&sensor=false");
             LOG.debug("URL ", URL);
 
             // Open the Connection
