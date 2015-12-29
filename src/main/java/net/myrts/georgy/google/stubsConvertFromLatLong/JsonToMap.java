@@ -17,6 +17,12 @@ public class JsonToMap {
 
     private static final Logger LOG = LoggerFactory.getLogger(JsonToMap.class);
 
+    /**
+     * To write JSON to Map
+     *
+     * @param response JSONObject
+     * @param addressSettings Map<String, String>
+     */
     public static void jsonParseToMap(JSONObject response,
                                       Map<String, String> addressSettings) {
         for (int j = 0; j < response.getJSONArray("results").length(); j++) {
