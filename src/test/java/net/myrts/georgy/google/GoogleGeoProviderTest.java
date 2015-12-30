@@ -16,6 +16,7 @@ public class GoogleGeoProviderTest extends BaseProviderTest {
 
     @Test
     public void shouldConvertAddressToLatLongIndia() throws UnknownHostException, GeorgyException {
+
         final String address = "Apollo Bunder, Mumbai, Maharashtra, India";
         final double dLat =18.9203886d;
         final double dLon =72.8301305d;
@@ -45,8 +46,6 @@ public class GoogleGeoProviderTest extends BaseProviderTest {
 
         assertEquals("Postal code does not match " + addressLocation, "400001", address.getPostalCode());
         assertLocation(18.92038860d, 72.83013059d, addressLocation);
-
-
     }
 
     @Test
