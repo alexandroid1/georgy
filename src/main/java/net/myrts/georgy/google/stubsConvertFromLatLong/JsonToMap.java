@@ -32,14 +32,25 @@ public class JsonToMap {
             LOG.debug("addressComponents " + addressComponents);
 
             for (int i = 0; i < addressComponents.length(); i++) {
-                String longName = addressComponents.getJSONObject(i).getString("long_name");
-                String shortName = addressComponents.getJSONObject(i).getString("short_name");
-                JSONArray types = addressComponents.getJSONObject(i).getJSONArray("types");
-                String type = (String) types.get(0);
-                addressSettings.putIfAbsent(type, longName);
-                addressSettings.putIfAbsent(type+"_short", shortName);
+                readsJsonToMap(addressSettings, addressComponents, i);
             }
         }
+    }
+
+    /**
+     * To read Json To Map
+     *
+     * @param addressSettings Map<String, String>
+     * @param addressComponents JSONArray
+     * @param i int
+     */
+    private static void readsJsonToMap(Map<String, String> addressSettings, JSONArray addressComponents, int i) {
+        String longName = addressComponents.getJSONObject(i).getString("long_name");
+        String shortName = addressComponents.getJSONObject(i).getString("short_name");
+        JSONArray types = addressComponents.getJSONObject(i).getJSONArray("types");
+        String type = (String) types.get(0);
+        addressSettings.putIfAbsent(type, longName);
+        addressSettings.putIfAbsent(type+"_short", shortName);
     }
 
 }

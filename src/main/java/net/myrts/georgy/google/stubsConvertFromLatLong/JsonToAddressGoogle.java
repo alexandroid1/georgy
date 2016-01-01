@@ -53,27 +53,7 @@ public class JsonToAddressGoogle {
 
                     if ("OK".equals(response.getString("status"))) {
 
-                        Map<String, String> addressSettings = Maps.newHashMap();
-                        jsonParseToMap(response, addressSettings);
-
-                        Set<String> set = addressSettings.keySet();
-                        LOG.debug("addressSettings.keySet(); " + set);
-
-                        ArrayList<String> keys = new ArrayList<>(set);
-                        LOG.debug("keys " + keys);
-
-                        Function<String, String> rotateHashMap = Functions.forMap(addressSettings);
-                        ArrayList<String> values = new ArrayList<>(Collections2.transform(keys, rotateHashMap));
-
-                        for(String key : keys){
-                            LOG.debug(key + " " + addressSettings.get(key));
-                        }
-
-                        addressGoogle.setAddressKeys(keys);
-                        addressGoogle.setAddressValues(values);
-                        addressGoogle.setAddressSettingsMap(addressSettings);
-
-                        jsonToGoogleAddress(addressGoogle, addressSettings, keys);
+                        writeMapFromJsonToGoogleAdress(addressGoogle, response);
 
                     } else {
                         LOG.debug(response.getString("status"));
@@ -92,5 +72,35 @@ public class JsonToAddressGoogle {
                 return addressGoogle;
             }
         }
+    }
+
+    /**
+     * To write Map from Json to GoogleAdress
+     *
+     * @param addressGoogle AddressGoogle
+     * @param response JSONObject
+     */
+    private static void writeMapFromJsonToGoogleAdress(AddressGoogle addressGoogle, JSONObject response) throws GeorgyException {
+        Map<String, String> addressSettings = Maps.newHashMap();
+        jsonParseToMap(response, addressSettings);
+
+        Set<String> set = addressSettings.keySet();
+        LOG.debug("addressSettings.keySet(); " + set);
+
+        ArrayList<String> keys = new ArrayList<>(set);
+        LOG.debug("keys " + keys);
+
+        Function<String, String> rotateHashMap = Functions.forMap(addressSettings);
+        ArrayList<String> values = new ArrayList<>(Collections2.transform(keys, rotateHashMap));
+
+        for(String key : keys){
+            LOG.debug(key + " " + addressSettings.get(key));
+        }
+
+        addressGoogle.setAddressKeys(keys);
+        addressGoogle.setAddressValues(values);
+        addressGoogle.setAddressSettingsMap(addressSettings);
+
+        jsonToGoogleAddress(addressGoogle, addressSettings, keys);
     }
 }
