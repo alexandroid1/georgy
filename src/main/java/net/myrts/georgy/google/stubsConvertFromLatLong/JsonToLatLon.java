@@ -27,9 +27,9 @@ public class JsonToLatLon {
                         result.getGeometry().getLocation().getLng()
                 );
 
-                LOG.debug("Latitude ", result.getGeometry().getLocation().getLat());
-                LOG.debug("Longitude ", result.getGeometry().getLocation().getLng());
-                LOG.debug("Location type ", result.getGeometry().getLocationType());
+              //  LOG.debug("Latitude ", result.getGeometry().getLocation().getLat());
+              //  LOG.debug("Longitude ", result.getGeometry().getLocation().getLng());
+              //  LOG.debug("Location type ", result.getGeometry().getLocationType());
                 return geoLocation;
             }
         } else {

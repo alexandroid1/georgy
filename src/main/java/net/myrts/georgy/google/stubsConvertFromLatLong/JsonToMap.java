@@ -29,7 +29,7 @@ public class JsonToMap {
 
             final JSONObject location = response.getJSONArray("results").getJSONObject(j);
             final JSONArray addressComponents = location.getJSONArray("address_components");
-            LOG.debug("addressComponents " + addressComponents);
+            //LOG.debug("addressComponents " + addressComponents);
 
             for (int i = 0; i < addressComponents.length(); i++) {
                 readsJsonToMap(addressSettings, addressComponents, i);

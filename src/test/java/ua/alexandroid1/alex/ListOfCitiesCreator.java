@@ -17,31 +17,42 @@ import static org.junit.Assert.assertEquals;
 public class ListOfCitiesCreator extends BaseProviderTest {
 
     @Test
-    public void shouldConvertLatLongToAddressIndia() throws UnknownHostException, GeorgyException {
+    public void listOfCities() throws UnknownHostException, GeorgyException {
 
         double dLat = 50.115977d;
         double dLon = 8.690928d;
 
-        double radius = 10.00000000d;
+        double radius = 1.00000000d;
+        double delta = 0.2000000d;
 
+        double searchPointLat = dLat - radius;
+        double searchPointLon = dLon - radius;
 
-        DoublePoint doublePoint = new DoublePoint(dLat, dLon);
+        GoogleAddressProvider googleAddressProvider = new GoogleAddressProvider();
+        AddressLocation addressLocation = null;
 
-        while (
-                (dLat - radius) < doublePoint.getdLat()
-                        && doublePoint.getdLat() < (dLat + radius)
-                ) {
-            doublePoint.increasedLat();
+        while (((dLat - radius - delta) <= searchPointLat)
+                && (searchPointLat <= (dLat + radius + delta) )) {
+            searchPointLat = searchPointLat + delta;
             while (
-                    (dLon - radius) < doublePoint.getdLon()
-                            && doublePoint.getdLon() < (dLon + radius)
+                    (dLon - radius - delta) <= searchPointLon
+                            && searchPointLon <= (dLon + radius + delta)
                     ) {
-                doublePoint.increasedLon();
-                final GoogleAddressProvider googleAddressProvider = new GoogleAddressProvider();
-                final AddressLocation addressLocation = googleAddressProvider.convertFromLatLong(dLat, dLon, "en");
-                final Address address = addressLocation.getAddress();
-                System.out.println(address.getSubdivision() + address.getCity());
+                searchPointLon = searchPointLon + delta;
+
+                try {
+                    addressLocation = googleAddressProvider.convertFromLatLong(searchPointLat, searchPointLon, "en");
+                } catch (GeorgyException e) {
+                    e.printStackTrace();
+                }
+                Address address = addressLocation.getAddress();
+
+                System.out.println("Subdivision = " + address.getSubdivision() );
+                System.out.println("City = " + address.getCity());
+
             }
         }
+
     }
+
 }

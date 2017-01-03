@@ -12,7 +12,10 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -40,13 +43,20 @@ public class JsonToAddressGoogle {
                 throw new GeorgyException("Failed to get response " +
                         "Longitude should be in -180..180 range");
             } else {
+
+
+               /* DecimalFormat df = new DecimalFormat("0", DecimalFormatSymbols.getInstance(Locale.ENGLISH));
+                df.setMaximumFractionDigits(340); //340 = DecimalFormat.DOUBLE_FRACTION_DIGITS
+
+                final String latLongString = String.valueOf(df.format(dLat)) + "," + String.valueOf(df.format(dLon));*/
+
                 final String latLongString = String.valueOf(dLat) + "," + String.valueOf(dLon);
                 final Map<String, String> params = Maps.newHashMap();
                 params.put("language", lang);
                 params.put("sensor", "false");
                 params.put("latlng", latLongString);
                 final String url = baseUrl + '?' + encodeParams(params);
-                LOG.debug("url ", url);
+               // LOG.debug("url ", url);
                 AddressGoogle addressGoogle = new AddressGoogle();
                 try {
                     final JSONObject response = JsonReader.read(url);
@@ -56,7 +66,7 @@ public class JsonToAddressGoogle {
                         writeMapFromJsonToGoogleAdress(addressGoogle, response);
 
                     } else {
-                        LOG.debug(response.getString("status"));
+                       // LOG.debug(response.getString("status"));
                         throw new GeorgyException("Failed to get response " + response);
                     }
                 } catch (MalformedURLException e) {
@@ -85,16 +95,16 @@ public class JsonToAddressGoogle {
         jsonParseToMap(response, addressSettings);
 
         Set<String> set = addressSettings.keySet();
-        LOG.debug("addressSettings.keySet(); " + set);
+        //LOG.debug("addressSettings.keySet(); " + set);
 
         ArrayList<String> keys = new ArrayList<>(set);
-        LOG.debug("keys " + keys);
+       // LOG.debug("keys " + keys);
 
         Function<String, String> rotateHashMap = Functions.forMap(addressSettings);
         ArrayList<String> values = new ArrayList<>(Collections2.transform(keys, rotateHashMap));
 
         for(String key : keys){
-            LOG.debug(key + " " + addressSettings.get(key));
+           // LOG.debug(key + " " + addressSettings.get(key));
         }
 
         addressGoogle.setAddressKeys(keys);
