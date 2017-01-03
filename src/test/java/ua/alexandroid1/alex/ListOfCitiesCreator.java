@@ -20,8 +20,8 @@ public class ListOfCitiesCreator extends BaseProviderTest {
     @Test
     public void listOfCities() throws UnknownHostException, GeorgyException {
 
-        double dLat = 50.115977d;
-        double dLon = 8.690928d;
+        double dLat = 51.984395d;
+        double dLon = 5.897313d;
 
         double radius = 2.00000000d;
         double delta = 0.10000d;
