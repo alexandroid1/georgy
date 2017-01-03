@@ -8,6 +8,7 @@ import net.myrts.georgy.google.GoogleAddressProvider;
 import org.junit.Test;
 
 import java.net.UnknownHostException;
+import java.util.HashSet;
 
 import static org.junit.Assert.assertEquals;
 
@@ -22,14 +23,17 @@ public class ListOfCitiesCreator extends BaseProviderTest {
         double dLat = 50.115977d;
         double dLon = 8.690928d;
 
-        double radius = 1.00000000d;
-        double delta = 0.2000000d;
+        double radius = 2.00000000d;
+        double delta = 0.10000d;
 
         double searchPointLat = dLat - radius;
         double searchPointLon = dLon - radius;
 
         GoogleAddressProvider googleAddressProvider = new GoogleAddressProvider();
         AddressLocation addressLocation = null;
+
+        HashSet<String> citiesHashSet = new HashSet<>();
+        HashSet<String> subdivisionHashSet = new HashSet<>();
 
         while (((dLat - radius - delta) <= searchPointLat)
                 && (searchPointLat <= (dLat + radius + delta) )) {
@@ -47,11 +51,21 @@ public class ListOfCitiesCreator extends BaseProviderTest {
                 }
                 Address address = addressLocation.getAddress();
 
-                System.out.println("Subdivision = " + address.getSubdivision() );
-                System.out.println("City = " + address.getCity());
+                subdivisionHashSet.add(address.getSubdivision());
+                //System.out.println("Subdivision = " + address.getSubdivision());
+
+
+                citiesHashSet.add(address.getCity());
+                //System.out.println("City = " + address.getCity());
 
             }
         }
+
+
+        for (String city : citiesHashSet) {
+            System.out.println(city);
+        }
+
 
     }
 
