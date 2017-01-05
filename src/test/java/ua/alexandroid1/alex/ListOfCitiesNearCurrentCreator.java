@@ -11,8 +11,6 @@ import org.junit.Test;
 import java.net.UnknownHostException;
 import java.util.HashSet;
 
-import static org.junit.Assert.assertEquals;
-
 /**
  * Created by Oleksandr on 03.01.2017.
  */
@@ -63,12 +61,9 @@ public class ListOfCitiesNearCurrentCreator extends BaseProviderTest {
             }
         }
 
-
         for (String city : citiesHashSet) {
             System.out.println(city);
         }
 
-
     }
-
 }
