@@ -4,7 +4,6 @@ import net.myrts.georgy.api.Address;
 import net.myrts.georgy.api.AddressLocation;
 import net.myrts.georgy.api.GeoLocation;
 import net.myrts.georgy.api.GeorgyException;
-import net.myrts.georgy.google.GoogleAddressProvider;
 import org.junit.Test;
 
 import java.net.UnknownHostException;
@@ -73,11 +72,16 @@ public class ListOfCitiesNearCurrentCreator {
             }
         }
 
+        List sortedSubdivisionList = new ArrayList(subdivisionHashSet);
+        Collections.sort(sortedSubdivisionList);
+        System.out.println(sortedSubdivisionList);
+        assertEquals("Subdivision does not match " + sortedSubdivisionList, "[Limburg, " +
+                        "Nordrhein-Westfalen, Vlaanderen]"
+                , sortedSubdivisionList.toString());
+
         List sortedCitiesList = new ArrayList(citiesHashSet);
         Collections.sort(sortedCitiesList);
-
         System.out.println(sortedCitiesList);
-
         assertEquals("City does not match " + sortedCitiesList, "[Beringen, Burscheid, Dormagen, " +
                 "Echt, Erkelenz, Grevenbroich, Ham, Heinsberg, Houthalen-Helchteren, Hückelhoven, Jüchen, Laakdal, " +
                 "Leverkusen, Maaseik, Meeuwen-Gruitrode, Monheim am Rhein, " +
