@@ -14,7 +14,7 @@ import java.util.HashSet;
 /**
  * Created by Oleksandr on 03.01.2017.
  */
-public class ListOfCitiesNearCurrentCreator extends BaseProviderTest {
+public class ListOfCitiesNearCurrentCreator {
 
     @Test
     public void listOfCities() throws UnknownHostException, GeorgyException {
