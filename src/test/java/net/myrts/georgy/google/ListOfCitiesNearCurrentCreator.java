@@ -56,6 +56,7 @@ public class ListOfCitiesNearCurrentCreator {
                     e.printStackTrace();
                 }
 
+                // rate-limit for this API
                 try {
                     Thread.sleep(500);
                 } catch (InterruptedException e) {
