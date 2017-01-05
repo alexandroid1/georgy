@@ -16,6 +16,7 @@ import static org.junit.Assert.assertEquals;
 
 /**
  * Created by Oleksandr on 03.01.2017.
+ * @author <a href="mailto:avpavlov108@gmail.com">Oleksandr Pavlov</a>
  */
 public class ListOfCitiesNearCurrentCreator {
 
@@ -72,6 +73,7 @@ public class ListOfCitiesNearCurrentCreator {
             }
         }
 
+        // Subdivision
         List sortedSubdivisionList = new ArrayList(subdivisionHashSet);
         Collections.sort(sortedSubdivisionList);
         System.out.println(sortedSubdivisionList);
@@ -79,6 +81,7 @@ public class ListOfCitiesNearCurrentCreator {
                         "Nordrhein-Westfalen, Vlaanderen]"
                 , sortedSubdivisionList.toString());
 
+        // Cities
         List sortedCitiesList = new ArrayList(citiesHashSet);
         Collections.sort(sortedCitiesList);
         System.out.println(sortedCitiesList);
