@@ -3,6 +3,7 @@ package ua.alexandroid1.alex;
 import net.myrts.georgy.BaseProviderTest;
 import net.myrts.georgy.api.Address;
 import net.myrts.georgy.api.AddressLocation;
+import net.myrts.georgy.api.GeoLocation;
 import net.myrts.georgy.api.GeorgyException;
 import net.myrts.georgy.google.GoogleAddressProvider;
 import org.junit.Test;
@@ -15,13 +16,16 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by Oleksandr on 03.01.2017.
  */
-public class ListOfCitiesCreator extends BaseProviderTest {
+public class ListOfCitiesNearCurrentCreator extends BaseProviderTest {
 
     @Test
     public void listOfCities() throws UnknownHostException, GeorgyException {
 
-        double dLat = 51.984395d;
-        double dLon = 5.897313d;
+        final String sourceAddress = "Arnhem, Netherlands";
+        final GeoLocation geoLocation = new GoogleAddressProvider().convertToLatLong(sourceAddress);
+
+        double dLat = geoLocation.getLatitude();
+        double dLon = geoLocation.getLongitude();
 
         double radius = 2.00000000d;
         double delta = 0.10000d;
@@ -49,15 +53,13 @@ public class ListOfCitiesCreator extends BaseProviderTest {
                 } catch (GeorgyException e) {
                     e.printStackTrace();
                 }
-                Address address = addressLocation.getAddress();
+                Address destinationAddress = addressLocation.getAddress();
 
-                subdivisionHashSet.add(address.getSubdivision());
+                subdivisionHashSet.add(destinationAddress.getSubdivision());
                 //System.out.println("Subdivision = " + address.getSubdivision());
 
-
-                citiesHashSet.add(address.getCity());
+                citiesHashSet.add(destinationAddress.getCity());
                 //System.out.println("City = " + address.getCity());
-
             }
         }
 
