@@ -1,6 +1,5 @@
-package ua.alexandroid1.alex;
+package net.myrts.georgy.google;
 
-import net.myrts.georgy.BaseProviderTest;
 import net.myrts.georgy.api.Address;
 import net.myrts.georgy.api.AddressLocation;
 import net.myrts.georgy.api.GeoLocation;
@@ -9,7 +8,12 @@ import net.myrts.georgy.google.GoogleAddressProvider;
 import org.junit.Test;
 
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by Oleksandr on 03.01.2017.
@@ -25,7 +29,7 @@ public class ListOfCitiesNearCurrentCreator {
         double dLat = geoLocation.getLatitude();
         double dLon = geoLocation.getLongitude();
 
-        double radius = 2.00000000d;
+        double radius = 1.00000000d;
         double delta = 0.10000d;
 
         double searchPointLat = dLat - radius;
@@ -61,9 +65,16 @@ public class ListOfCitiesNearCurrentCreator {
             }
         }
 
-        for (String city : citiesHashSet) {
-            System.out.println(city);
-        }
+        List sortedCitiesList = new ArrayList(citiesHashSet);
+        Collections.sort(sortedCitiesList);
+
+        System.out.println(sortedCitiesList);
+
+        assertEquals("City does not match " + sortedCitiesList, "[Beringen, Burscheid, Dormagen, " +
+                "Echt, Erkelenz, Grevenbroich, Ham, Heinsberg, Houthalen-Helchteren, Hückelhoven, Jüchen, Laakdal, " +
+                "Leverkusen, Maaseik, Meeuwen-Gruitrode, Monheim am Rhein, " +
+                "Rommerskirchen, Waldfeucht]"
+                , sortedCitiesList.toString());
 
     }
 }
