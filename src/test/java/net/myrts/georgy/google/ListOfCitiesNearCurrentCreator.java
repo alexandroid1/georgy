@@ -55,6 +55,13 @@ public class ListOfCitiesNearCurrentCreator {
                 } catch (GeorgyException e) {
                     e.printStackTrace();
                 }
+
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
                 Address destinationAddress = addressLocation.getAddress();
 
                 subdivisionHashSet.add(destinationAddress.getSubdivision());
